@@ -1,8 +1,65 @@
 .App {
   text-align: center;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-image: url('/images/worldcup_qatar.jpg');
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
 }
 
-.App-logo {
+.auth-form-container, .login-form, .register-form{
+  display: flex;
+  flex-direction: column;
+  ;
+}
+
+@media screen and (min-width: 600px){
+  .auth-form-container{
+    padding: 3rem;
+    border: 1px solid white;
+    border-radius: 10px;
+    margin: 0.5rem;
+    margin-left: 900px;
+  }
+}
+
+label {
+  text-align: left;
+  padding: 0.25rem 1;
+}
+
+input, select{
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 10px;
+}
+
+button {
+  margin-top: 200px;
+  border: None;
+  background-color: white;
+  padding: 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  color: #7439db;
+}
+
+.link-btn{
+  background: none;
+  color: white;
+  text-decoration: underline;
+}
+
+.loginOrRegister{
+  margin-top: 20px;
+}
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -35,4 +92,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
