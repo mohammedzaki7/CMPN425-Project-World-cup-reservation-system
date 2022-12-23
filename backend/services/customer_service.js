@@ -4,7 +4,7 @@ const Customer = require('../models/customer_model');
 //@method: POST
 //@desc: create a new customer
 //@access: public
-//@status code: 200 - success, 400 - error empty request
+//@status code: 200 - success, 400 - error empty request, 500 - error in server
 exports.signupCustomer = (req, res) => {
     // validate empty body
     if (!req.body) {
@@ -23,12 +23,11 @@ exports.signupCustomer = (req, res) => {
     // so we need to check if the email already exists
     Customer.findOne({ email : req.body.email }).then((result) => {
         if (result) {
-            res.status(400).send({ message: "Email already exists!" });
-            // console.log(res.statusCode);
-            return;
+            res.status(400);
+            return res.json({ message: "Email of a customer already exists!" });
         }
     }).catch((err) => {
-        console.log(err);
+        res.status(500).send({ message: err.message || "Some error occurred while creating customers." });
     });
 
 
@@ -37,7 +36,7 @@ exports.signupCustomer = (req, res) => {
         res.send(result);
         // console.log(res.statusCode);
     }).catch((err) => {
-        console.log(err);
+        res.status(500).send({ message: err.message || "Some error occurred while creating customer." });
     });
 }
 
