@@ -28,6 +28,18 @@ exports.createStadium = async (req, res) => {
     });
 }
 
+//@method: GET
+//@desc: get all stadiums
+//@access: public
+//@status code: 200 - success, 500 - error in server
+exports.getAllStadiums = async (req, res) => {
+    Stadium.find().then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.status(500).send({ message: err.message || "Some error occurred while retrieving stadiums." });
+    });
+}
+
 
 //@method: GET
 //@desc: get stadium by name
