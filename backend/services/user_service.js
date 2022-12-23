@@ -63,26 +63,28 @@ exports.loginUser = (req, res) => {
     });
 }
 
+
 //@method: GET
-//@desc: find all managers
+//@desc: find all managers given approval status
 //@access: public
 //@status code: 200 - success, 500 - server error
-exports.findManagerAll = (req, res) => {
-    // find users where role is manager
-    User.find({ role: 'manager' }).then((result) => {
+exports.findAllManager = (req, res) => {
+    // find users where role is manager and with the given approval status
+    User.find({ role: 'manager', approved: req.params.approved }).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while retrieving managers." });
     });
+
 }
 
 
 //@method: GET
-//@desc: find all customers
+//@desc: find all customers given approval status
 //@access: public
 //@status code: 200 - success, 500 - server error
-exports.findCustomerAll = (req, res) => {
-    User.find({ role: 'fan' }).then((result) => {
+exports.findAllCustomer = (req, res) => {
+    User.find({ role: 'fan', approved: req.params.approved }).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while retrieving fans." });
@@ -159,3 +161,28 @@ exports.deleteUser = (req, res) => {
     });
 }
 
+
+//@method: GET
+//@desc: find all users given approved status
+//@access: public
+//@status code: 200 - success, 500 - server error
+exports.findAllUserByApproval = (req, res) => {
+    User.find({ approved: req.params.approved }).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.status(500).send({ message: err.message || "Some error occurred while retrieving managers." });
+    });
+}
+
+
+//@method: GET
+//@desc: find all users approved users ID and role
+//@access: public
+//@status code: 200 - success, 500 - server error
+exports.findAllApprovedUsersIDAndRole = (req, res) => {
+    User.find({ approved: true }, { _id: 1, role: 1 }).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.status(500).send({ message: err.message || "Some error occurred while retrieving managers." });
+    });
+}
