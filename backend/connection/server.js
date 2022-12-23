@@ -4,7 +4,7 @@ const app = express();
 app.use(express.json());
 
 const PORT = 3000;
-
+const baseRoute = '../routes/'
 var host, port;
 
 
@@ -18,9 +18,6 @@ const server = app.listen(PORT, () => {
 });
 
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-  });
-
+app.use('/', require(baseRoute + 'customer.js'));
 
 
