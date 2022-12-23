@@ -10,7 +10,7 @@ npm install
 ## Run server
 
 ```bash
-npm nodemon
+npm start
 ```
 
 
