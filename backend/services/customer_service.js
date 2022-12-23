@@ -12,6 +12,12 @@ exports.signup = (req, res) => {
         // console.log(res.statusCode);
         return;
     }
+    //checking if any of the required fields are empty
+    if (!req.body.name || !req.body.email || !req.body.password || !req.body.age || !req.body.phone || !req.body.address) {
+        res.status(400).send({ message: "Please fill all the required fields!" });
+        // console.log(res.statusCode);
+        return;
+    }
 
     // email is set to unique in the model, so if the email already exists, it will throw an error
     // so we need to check if the email already exists
@@ -63,7 +69,6 @@ exports.login = (req, res) => {
         console.log(err);
     });
 }
-
 
 
 //@method: GET
