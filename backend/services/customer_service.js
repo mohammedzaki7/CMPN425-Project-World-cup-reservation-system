@@ -149,7 +149,9 @@ exports.deleteCustomer = (req, res) => {
 
 
 
-
+//@method: GET
+//@desc: get customers given the boolean approved
+//@access: public
 
 
 
