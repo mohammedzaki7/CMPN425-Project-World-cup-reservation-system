@@ -61,7 +61,6 @@ exports.loginCustomer = (req, res) => {
         }
         //check if the password is correct
         if (result.password == req.body.password) {
-            console.log(result);
             res.send(result);
         } else {
             res.status(405).send({ message: "Password is incorrect!" });
@@ -112,7 +111,12 @@ exports.findCustomerByID = (req, res) => {
 exports.updateCustomer = (req, res) => {
     if (req.params.id) {
         Customer.findByIdAndUpdate(req.params.id , req.body , { useFindAndModify: false }).then((result) => {
+            if (!result) {
+                res.status(404).send({ message: "Cannot found Customer with id " + req.params.id });
+                return;
+            }
             res.send({ message: "Customer was updated successfully." });
+            return;
         }).catch((err) => {
             res.status(404).send({ message: err.message || "Some error occurred while updating the customer." });
         });
@@ -129,7 +133,12 @@ exports.updateCustomer = (req, res) => {
 exports.deleteCustomer = (req, res) => {
     if (req.params.id) {
         Customer.findByIdAndDelete(req.params.id).then((result) => {
+            if (!result) {
+                res.status(404).send({ message: "Cannot found Customer with id " + req.params.id });
+                return;
+            }
             res.send({ message: "Customer was deleted successfully." });
+            return;
         }).catch((err) => {
             res.status(404).send({ message: err.message || "Some error occurred while deleting the customer." });
         });
