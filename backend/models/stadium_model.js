@@ -32,6 +32,6 @@ StadiumSchema.statics.stadiumNameInUse = async function(name, id = -1) {
     }
 }
 
-const Stadium = mongoose.model('Stadium', StadiumSchema);
+const Stadium = mongoose.model("Stadiums", StadiumSchema);
 module.exports = Stadium;
 
