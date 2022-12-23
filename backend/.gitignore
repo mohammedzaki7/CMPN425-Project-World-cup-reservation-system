@@ -1,3 +1,4 @@
 node_modules
 view
 frontend/node_modules
+*.rest

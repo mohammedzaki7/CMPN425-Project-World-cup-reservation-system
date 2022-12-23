@@ -4,7 +4,7 @@ const Customer = require('../models/customer_model');
 //@method: POST
 //@desc: create a new customer
 //@access: public
-//@status code: 200 - success, 400 - error (email already exists or empty body)
+//@status code: 200 - success, 400 - error empty request
 exports.signup = (req, res) => {
     // validate empty body
     if (!req.body) {
@@ -34,6 +34,50 @@ exports.signup = (req, res) => {
         console.log(err);
     });
 }
+
+//@method: POST
+//@desc: create a new customer
+//@access: public
+//@status code: 200 - success, 400 - error empty request, 404 - email does not exist, 405 - password is incorrect
+exports.login = (req, res) => {
+    //validate empty body
+    if (!req.body) {
+        res.status(400).send({ message: "Content can not be empty!" });
+        return;
+    }
+
+    //find the customer with the email
+    Customer.findOne({ email : req.body.email }).then((result) => {
+        if (!result) {
+            res.status(404).send({ message: "Email does not exist!" });
+            return;
+        }
+        //check if the password is correct
+        if (result.password == req.body.password) {
+            console.log(result);
+            res.send(result);
+        } else {
+            res.status(405).send({ message: "Password is incorrect!" });
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+
+
+
+//@method: GET
+//@desc: get all customers
+//@access: public
+//@status code: 200 - success, 500 - error server
+exports.findAll = (req, res) => {
+    Customer.find().then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.status(500).send({ message: err.message || "Some error occurred while retrieving customers." });
+    });
+}
+
 
 
 

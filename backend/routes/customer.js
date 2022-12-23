@@ -5,6 +5,9 @@ const customer_service = require('../services/customer_service');
 
 route.get('/', home_service.home);
 
-route.post('/customer', customer_service.signup);
+route.get('/customer', customer_service.findAll);
+route.post('/customer/signup', customer_service.signup);
+route.post('/customer/login', customer_service.login);
+
 
 module.exports = route;
