@@ -2,7 +2,7 @@
 var mongoose = require('mongoose');
 mongoose.set("strictQuery", false);
 
-const connectionString = "mongodb+srv://ArwaShamardal:KljJfKUp2bnD0nue@worldcupcluster.zgddwfn.mongodb.net/?retryWrites=true&w=majority";
+const connectionString = "mongodb+srv://ArwaShamardal:KljJfKUp2bnD0nue@worldcupcluster.zgddwfn.mongodb.net/WorldCupDB?retryWrites=true&w=majority";
 
 
 const connectDB = async() => {

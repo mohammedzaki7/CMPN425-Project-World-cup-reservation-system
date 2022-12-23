@@ -18,6 +18,10 @@ const server = app.listen(PORT, () => {
     console.log('listening at http://localhost:%s', port);
 });
 
+app.set('view engine', 'ejs'); // set up ejs for templating TOBE REMOVED
+
+app.use(express.static('public'))
+app.use(express.urlencoded({extended: true}));
 app.use(morgan('tiny'));
 
 app.use('/', require(baseRoute + 'customer.js'));
