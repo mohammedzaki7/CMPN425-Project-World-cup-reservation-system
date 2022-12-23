@@ -1,3 +1,19 @@
+# Backend 
+route to backend folder
+
+## Requirements
+
+```bash
+npm install
+```
+
+## Run server
+
+```bash
+npm nodemon
+```
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
