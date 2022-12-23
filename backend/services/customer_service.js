@@ -5,7 +5,7 @@ const Customer = require('../models/customer_model');
 //@desc: create a new customer
 //@access: public
 //@status code: 200 - success, 400 - error empty request
-exports.signup = (req, res) => {
+exports.signupCustomer = (req, res) => {
     // validate empty body
     if (!req.body) {
         res.status(400).send({ message: "Content can not be empty!" });
@@ -45,9 +45,9 @@ exports.signup = (req, res) => {
 //@desc: create a new customer
 //@access: public
 //@status code: 200 - success, 400 - error empty request, 404 - email does not exist, 405 - password is incorrect
-exports.login = (req, res) => {
+exports.loginCustomer = (req, res) => {
     //validate empty body
-    if (!req.body) {
+    if (!req.body || !req.body.email || !req.body.password) {
         res.status(400).send({ message: "Content can not be empty!" });
         return;
     }
@@ -75,7 +75,7 @@ exports.login = (req, res) => {
 //@desc: get all customers
 //@access: public
 //@status code: 200 - success, 500 - error server
-exports.findAll = (req, res) => {
+exports.findCustomerAll = (req, res) => {
     Customer.find().then((result) => {
         res.send(result);
     }).catch((err) => {
@@ -83,6 +83,59 @@ exports.findAll = (req, res) => {
     });
 }
 
+//@method: GET
+//@desc: get one customer by id
+//@access: public
+//@status code: 200 - success, 400 - error empty request, 404 - customer not found, 500 - error server
+exports.findCustomerByID = (req, res) => {
+    if (req.params.id) {
+        Customer.findById(req.params.id).then((result) => {
+            if (!result) {
+                res.status(404).send({ message: "Cannot found Customer with id " + req.params.id });
+            } else {
+                res.send(result);
+            }
+        }).catch((err) => {
+            res.status(500).send({ message: err.message || "Some error occurred while retrieving the customer." });
+        });
+    } else {
+        res.status(400).send({ message: "ID isn't sent." });
+    }
+}
+
+
+//@method: PUT
+//@desc: update a customer
+//@access: public
+//@status code: 200 - success, 400 - error empty request, 404 - customer not found, 500 - error server
+exports.updateCustomer = (req, res) => {
+    if (req.params.id) {
+        Customer.findByIdAndUpdate(req.params.id , req.body , { useFindAndModify: false }).then((result) => {
+            res.send({ message: "Customer was updated successfully." });
+        }).catch((err) => {
+            res.status(404).send({ message: err.message || "Some error occurred while updating the customer." });
+        });
+    } else {
+        res.status(400).send({ message: "ID isn't sent." });
+    }
+}
+
+
+//@method: DELETE
+//@desc: delete a customer
+//@access: public
+//@status code: 200 - success, 400 - error empty request, 404 - customer not found, 500 - error server
+exports.deleteCustomer = (req, res) => {
+    if (req.params.id) {
+        Customer.findByIdAndDelete(req.params.id).then((result) => {
+            res.send({ message: "Customer was deleted successfully." });
+        }).catch((err) => {
+            res.status(404).send({ message: err.message || "Some error occurred while deleting the customer." });
+        });
+    } else {
+        res.status(400).send({ message: "ID isn't sent." });
+    }
+}
 
 
 
