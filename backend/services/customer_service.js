@@ -23,8 +23,10 @@ exports.signupCustomer = (req, res) => {
     // so we need to check if the email already exists
     Customer.findOne({ email : req.body.email }).then((result) => {
         if (result) {
-            res.status(400);
-            return res.json({ message: "Email of a customer already exists!" });
+            req.res.status(400).send({ message: "Email of a customer already exists!" });
+            return;
+            // res.status(400);
+            // return res.json({ message: "Email of a customer already exists!" });
         }
     }).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while creating customers." });

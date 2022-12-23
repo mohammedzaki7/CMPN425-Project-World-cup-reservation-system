@@ -16,5 +16,9 @@ route.delete('/customer/delete/:id', customer_service.deleteCustomer);
 
 //Manager routes
 route.post('/manager/create', manager_service.createManager);
+route.get('/manager/search', manager_service.findManagerAll);
+route.get('/manager/search/:id', manager_service.findManagerByID);
+route.put('/manager/update/:id', manager_service.updateManager);
+route.delete('/manager/delete/:id', manager_service.deleteManager);
 
 module.exports = route;

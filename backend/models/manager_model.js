@@ -27,10 +27,13 @@ const ManagerSchema = new Schema({
 
 
 
-ManagerSchema.statics.emailInUse = async function(email) {
+ManagerSchema.statics.emailInUse = async function(email, id = -1) {
     try {
         const manager = await this.findOne({ email });
         if (manager) {
+            if (manager._id == id) {
+                return true;
+            }
             return false;
         }
         return true;
