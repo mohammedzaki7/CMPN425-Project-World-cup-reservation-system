@@ -1,8 +1,11 @@
 const express = require('express');
-const customer = express.Router();
+const route = express.Router();
+const customer_service = require('../services/customer_service');
 
-customer.get('/', (req, res) => {
-    res.send('Hello World!');
+route.get('/', customer_service.home)
+
+route.get('/customer', (req, res) => {
+    res.send('Hello Customer!');
   });
 
-module.exports = customer;
+module.exports = route;
