@@ -1,0 +1,15 @@
+
+
+
+POST http://localhost:3000/match/add
+Content-Type: application/json
+
+{
+    "teamOne": "france",
+    "teamTwo": "mewd",
+    "matchVenue": "fds",
+    "mainReferee": "qdw",
+    "linesmanOne": "qdw",
+    "linesmanTwo":"erffr" ,
+    "stadium": 1
+}
