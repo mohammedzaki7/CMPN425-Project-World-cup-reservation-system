@@ -1,5 +1,5 @@
-# Backend 
-route to backend folder
+# 1- Backend 
+To be able to do the following commands, go to the backend folder
 
 ## Requirements
 
@@ -15,7 +15,7 @@ npm nodemon
 
 
 
-# Frontend
+# 2- Frontend
 
 ## Getting Started with Create React App
 
