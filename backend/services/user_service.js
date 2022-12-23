@@ -174,15 +174,3 @@ exports.findAllUserByApproval = (req, res) => {
     });
 }
 
-
-//@method: GET
-//@desc: find all users approved users ID and role
-//@access: public
-//@status code: 200 - success, 500 - server error
-exports.findAllApprovedUsersIDAndRole = (req, res) => {
-    User.find({ approved: true }, { _id: 1, role: 1 }).then((result) => {
-        res.send(result);
-    }).catch((err) => {
-        res.status(500).send({ message: err.message || "Some error occurred while retrieving managers." });
-    });
-}
