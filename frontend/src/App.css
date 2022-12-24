@@ -22,9 +22,9 @@
   .auth-form-container{
     padding: 3rem;
     border: 1px solid white;
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 0.5rem;
-    margin-left: 900px;
+    margin-left: 700px;
   }
 }
 
@@ -35,13 +35,13 @@ label {
 
 input, select{
   margin: 0.5rem 0;
-  padding: 0.5rem;
+  padding: 3px;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 button {
-  margin-top: 200px;
+  margin-top: 20px;
   border: None;
   background-color: white;
   padding: 10px;
@@ -58,6 +58,50 @@ button {
 
 .loginOrRegister{
   margin-top: 20px;
+}
+
+.seat {
+  background-color: #444451;
+  height: 12px;
+  width: 15px;
+  margin: 3px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  display: inline;
+}
+
+.first {
+  display: inline;
+}
+
+.stadiums {
+  background-color: rgb(8, 30, 97);
+  padding: 30px;
+  border-radius: 5px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+.seat.occupied {
+  background-color: rgb(152, 18, 18);
+}
+
+.title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+.match {
+  margin: 10px;
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 5px;
+
+}
+
+.teams {
+  margin: 5px;
 }
 /* .App-logo {
   height: 40vmin;
