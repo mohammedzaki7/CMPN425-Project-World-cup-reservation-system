@@ -4,6 +4,7 @@ const home_service = require('../services/home_service');
 const user_service = require('../services/user_service');
 const stadium_service = require('../services/stadium_service');
 const match_service = require('../services/match_service');
+const reservation_service = require('../services/reservation_service');
 
 route.get('/', home_service.home);
 
@@ -28,6 +29,9 @@ route.post('/match/create', match_service.createMatch);
 route.get('/match/view', match_service.getAllMatches);
 route.get('/match/search/:id', match_service.findMatchByID);
 route.put('/match/update/:id', match_service.updateMatchID);
+
+// Reservation routes
+route.post('/reservation/create', reservation_service.createReservation);
 
 
 

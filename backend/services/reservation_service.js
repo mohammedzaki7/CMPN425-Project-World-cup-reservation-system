@@ -23,17 +23,39 @@ exports.createReservation = async (req, res) => {
         res.status(404).send({ message: "User not found!" });
         return;
     }
+    const row = req.body.seat[0];
+    const column = req.body.seat[1];
+
 
     // check if match exists and if seat position is empty in match where seat is a list [row, column]
     const match = await Match.findById(req.body.matchid);
+    // check if seat is out of bounds of the matches seats
+    if ((row >= match.seats.length) || (column >= match.seats[0].length || (row < 0) || (column < 0))) {
+        res.status(405).send({ message: "Seat out of bounds!" });
+        return;
+    }
+
     if (!match) {
         res.status(404).send({ message: "Match not found!" });
         return;
     }
-    if (match.seats[req.body.seat[0]][req.body.seat[1]] != 0) {
-        res.status(405);
-        return res.json({ message: "Seat already taken!" });
+    if (match.seats[row][column] == 1) {
+        res.status(405).send({ message: "Seat already taken!" });
+        return;
     }
+
+
+
+    // find match by id and update match seats
+    match.seats[row][column] = 1;
+    Match.findByIdAndUpdate(req.body.matchid, { seats: match.seats }, { useFindAndModify: false }).then((result) => {
+        console.log(" seat in match is now = " + match.seats[row][column]);
+    }
+    ).catch((err) => {
+        res.status(500).send({ message: err.message || "Some error occurred while updating match." });
+    }
+    );
+
 
     // create reservation
     const reservation = new Reservation(req.body);
@@ -42,16 +64,6 @@ exports.createReservation = async (req, res) => {
     }
     ).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while creating reservation." });
-    }
-    );
-
-    // update match seats
-    match.seats[req.body.seat[0]][req.body.seat[1]] = 1;
-    match.save().then((result) => {
-        res.send(result);
-    }
-    ).catch((err) => {
-        res.status(500).send({ message: err.message || "Some error occurred while updating match." });
     }
     );
 }
