@@ -133,3 +133,32 @@ exports.findMatchReservations = (req, res) => {
     }
     );
 }
+
+
+//@method: DELETE
+//@desc: delete a reservation, update match seats
+//@access: public
+//@status code: 200 - success, 400 - error empty request, 404 - not found, 500 - error in server
+exports.deleteReservation = (req, res) => {    
+    Reservation.findByIdAndDelete(req.params.id).then((result) => {
+        // update match seats
+        row = result.seat[0];
+        column = result.seat[1];
+        //find one and update
+        Match.findByIdAndUpdate(result.matchid, { $set: { ["seats." + row + "." + column]: 0 } }, { useFindAndModify: false }).then((result) => {
+            console.log(" seat in match is now = " + result.seats[row][column]);
+        }
+        ).catch((err) => {
+            res.status(500).json({ message: err.message || "Some error occurred while updating match." });
+            return;
+        });
+
+        res.send({ message: "Reservation was deleted successfully!" });
+        return;
+    }
+    ).catch((err) => {
+        res.status(500).send({ message: err.message || "Some error occurred while deleting reservation." });
+        return;
+    }
+    );
+}
