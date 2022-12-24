@@ -1,5 +1,6 @@
 const Stadium = require('../models/stadium_model');
 const Match = require('../models/match_model');
+const Reservation = require('../models/reservation_model');
 
 //@method: POST
 //@desc: create a new match given the stadium name
@@ -81,6 +82,7 @@ exports.findMatchByID = async (req, res) => {
 //@status code: 200 - success, 400 - error empty request, 404 - not found, 500 - error in server
 // update seats array if stadium name is changed, it retrieves the stadium and makes a new seats array,
 // and retrieves the match unchanged parameters and updates the new parameters
+// it should delete all reservations of the match if the stadium name is changed
 exports.updateMatchID = async (req, res) => {
     if (!req.body) {
         res.status(400).send({ message: "Content can not be empty!" });
@@ -99,7 +101,14 @@ exports.updateMatchID = async (req, res) => {
                     for (let j = 0; j < result.width; j++) {
                         req.body.seats[i][j] = false;
                     }
-                }   
+                }
+                //delete all reservations of the match
+                Reservation.deleteMany({ matchid: req.params.id }).then((result) => {
+                    console.log("deleted reservations of match with id " + req.params.id);
+                }).catch((err) => {
+                    res.status(500).send({ message: "Error deleting reservations of match with id " + req.params.id });
+                });
+
             }
             //find and update the match
             Match.findByIdAndUpdate(req.params.id, req.body , { useFindAndModify: false }).then((result) => {
