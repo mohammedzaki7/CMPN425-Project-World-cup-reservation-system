@@ -46,11 +46,23 @@ exports.createMatch = async (req, res) => {
 }
 
 //@method: GET
-//@desc: get all matches
+//@desc: get all matches with seats
 //@access: public
 //@status code: 200 - success, 500 - error in server
-exports.getAllMatches = async (req, res) => {
+exports.getAllMatchesSeats = async (req, res) => {
     Match.find().then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.status(500).send({ message: err.message || "Some error occurred while retrieving matches." });
+    });
+}
+
+//@method: GET
+//@desc: get all matches without seats
+//@access: public
+//@status code: 200 - success, 500 - error in server
+exports.getAllMatchesNoSeats = async (req, res) => {
+    Match.find().select('-seats').then((result) => {
         res.send(result);
     }).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while retrieving matches." });

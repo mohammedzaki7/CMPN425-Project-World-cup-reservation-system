@@ -26,7 +26,8 @@ route.delete('/stadium/delete/:name', stadium_service.deleteStadiumByName);
 
 // Match routes
 route.post('/match/create', match_service.createMatch);
-route.get('/match/view', match_service.getAllMatches);
+route.get('/match/view/seats', match_service.getAllMatchesSeats);
+route.get('/match/view/noseats', match_service.getAllMatchesNoSeats);
 route.get('/match/search/:id', match_service.findMatchByID);
 route.put('/match/update/:id', match_service.updateMatchID);
 
