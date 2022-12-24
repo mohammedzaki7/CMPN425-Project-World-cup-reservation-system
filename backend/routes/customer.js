@@ -32,6 +32,8 @@ route.put('/match/update/:id', match_service.updateMatchID);
 
 // Reservation routes
 route.post('/reservation/create', reservation_service.createReservation);
+route.get('/reservation/user/:id', reservation_service.findUserReservations);
+route.get('/reservation/match/:id', reservation_service.findMatchReservations);
 
 
 

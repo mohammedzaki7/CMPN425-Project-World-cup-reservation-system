@@ -75,3 +75,61 @@ exports.createReservation = async (req, res) => {
     );
 }
 
+
+//@method: GET
+//@desc: get all reservations of a user
+//@access: public
+//@status code: 200 - success, 400 - error empty request, 404 - not found, 500 - error in server
+exports.findUserReservations = (req, res) => {
+    if (!req.params.id) {
+        res.status(400).json({ message: "Content can not be empty!" });
+        return;
+    }
+
+
+    // check if user exists
+    User.findById(req.params.id).then((result) => {}
+    ).catch((err) => {
+        res.status(404);
+        return;
+    });
+
+    Reservation.find({ userid: req.params.id }).then((result) => {
+        res.send(result);
+        return;
+    }
+    ).catch((err) => {
+        res.status(500).send({ message: err.message || "Some error occurred while retrieving reservations." });
+        return;
+    }
+    );
+}
+
+
+//@method: GET
+//@desc: get all reservations of a match
+//@access: public
+//@status code: 200 - success, 400 - error empty request, 404 - not found, 500 - error in server
+exports.findMatchReservations = (req, res) => {
+    if (!req.params.id) {
+        res.status(400).json({ message: "Content can not be empty!" });
+        return;
+    }
+
+    // check if match exists
+    Match.findById(req.params.id).then((result) => {}
+    ).catch((err) => {
+        res.status(404);
+        return;
+    });
+
+    Reservation.find({ matchid: req.params.id }).then((result) => {
+        res.send(result);
+        return;
+    }
+    ).catch((err) => {
+        res.status(500).send({ message: err.message || "Some error occurred while retrieving reservations." });
+        return;
+    }
+    );
+}
