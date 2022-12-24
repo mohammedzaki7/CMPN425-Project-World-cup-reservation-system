@@ -23,6 +23,13 @@ exports.createReservation = async (req, res) => {
         res.status(404).send({ message: "User not found!" });
         return;
     }
+    else{
+        // check if user is approved
+        if (user.approved == false) {
+            res.status(405).send({ message: "User is not yet approved!" });
+            return;
+        }
+    }
     const row = req.body.seat[0];
     const column = req.body.seat[1];
 
