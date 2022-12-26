@@ -28,7 +28,13 @@ exports.signupUser = async (req, res) => {
     }
     const user = new User(req.body);
     user.save().then((result) => {
-        res.send(result);
+        if (!result) {
+            res.status(500).send({ message: "Error in server!" });
+            return;
+        }
+        else{
+            res.send(result);
+        }
     }).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while creating user." });
     });
@@ -102,7 +108,9 @@ exports.findUserByID = (req, res ) => {
             res.status(404).send({ message: "user not found with id " + req.params.id });
             return;
         }
-        res.send(result);
+        else{
+            res.send(result);
+        }
     }).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while retrieving manager." });
     });
@@ -138,7 +146,9 @@ exports.updateUser = async (req, res) => {
             res.status(404).send({ message: "User not found." });
             return;
         }
-        res.send({ message: "User was updated successfully." });
+        else{
+            res.send({ message: "User was updated successfully." });
+        }
     }).catch((err) => {
         res.status(404).send({ message: err.message || "Some error occurred while updating manager." });
     });
@@ -155,7 +165,9 @@ exports.deleteUser = (req, res) => {
             res.status(404).send({ message: "User not found." });
             return;
         }
-        res.send({ message: "User was deleted successfully." });
+        else{
+            res.send({ message: "User was deleted successfully." });
+        }
     }).catch((err) => {
         res.status(404).send({ message: err.message || "Some error occurred while deleting manager." });
     });

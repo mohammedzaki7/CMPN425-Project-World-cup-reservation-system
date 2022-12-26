@@ -67,7 +67,13 @@ exports.createReservation = async (req, res) => {
     // create reservation
     const reservation = new Reservation(req.body);
     reservation.save().then((result) => {
-        res.send(result);
+        //error while creating reservation
+        if (!result) {
+            res.status(500).send({ message: "Some error occurred while creating reservation." });
+        }
+        else {
+            res.send(result);
+        }
     }
     ).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while creating reservation." });
@@ -93,10 +99,8 @@ exports.findUserReservations = (req, res) => {
         res.status(404);
         return;
     });
-
     Reservation.find({ userid: req.params.id }).then((result) => {
         res.send(result);
-        return;
     }
     ).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while retrieving reservations." });
@@ -125,7 +129,6 @@ exports.findMatchReservations = (req, res) => {
 
     Reservation.find({ matchid: req.params.id }).then((result) => {
         res.send(result);
-        return;
     }
     ).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while retrieving reservations." });
@@ -141,20 +144,26 @@ exports.findMatchReservations = (req, res) => {
 //@status code: 200 - success, 400 - error empty request, 404 - not found, 500 - error in server
 exports.deleteReservation = (req, res) => {    
     Reservation.findByIdAndDelete(req.params.id).then((result) => {
-        // update match seats
-        row = result.seat[0];
-        column = result.seat[1];
-        //find one and update
-        Match.findByIdAndUpdate(result.matchid, { $set: { ["seats." + row + "." + column]: 0 } }, { useFindAndModify: false }).then((result) => {
-            console.log(" seat in match is now = " + result.seats[row][column]);
-        }
-        ).catch((err) => {
-            res.status(500).json({ message: err.message || "Some error occurred while updating match." });
+        if (!result) {
+            res.status(404).send({ message: "Reservation not found!" });
             return;
-        });
+        }
+        else{
+            // update match seats
+            row = result.seat[0];
+            column = result.seat[1];
+            //find one and update
+            Match.findByIdAndUpdate(result.matchid, { $set: { ["seats." + row + "." + column]: 0 } }, { useFindAndModify: false }).then((result) => {
+                console.log(" seat in match is now = " + result.seats[row][column]);
+            }
+            ).catch((err) => {
+                res.status(500).json({ message: err.message || "Some error occurred while updating match." });
+                return;
+            });
 
-        res.send({ message: "Reservation was deleted successfully!" });
-        return;
+            res.send({ message: "Reservation was deleted successfully!" });
+            return;
+        }
     }
     ).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while deleting reservation." });

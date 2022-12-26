@@ -22,7 +22,12 @@ exports.createStadium = async (req, res) => {
 
     const stadium = new Stadium(req.body);
     stadium.save().then((result) => {
-        res.send(result);
+        if(!result){
+            res.status(500).send({ message: "Some error occurred while creating stadium." });
+        }
+        else{
+            res.send(result);
+        }
     }).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while creating user." });
     });
@@ -42,46 +47,50 @@ exports.getAllStadiums = async (req, res) => {
 
 
 //@method: GET
-//@desc: get stadium by name
+//@desc: get stadium by id
 //@access: public
 //@status code: 200 - success, 400 - error empty request, 404 - not found, 500 - error in server
-exports.findStadiumByName = async (req, res) => {
-    if (!req.params.name) {
+exports.findStadiumByID = async (req, res) => {
+    if (!req.params.id) {
         res.status(400).send({ message: "Content can not be empty!" });
         return;
     }
-    Stadium.findOne({ name: req.params.name }).then((result) => {
+    // find stadium by id
+    Stadium.findById(req.params.id).then((result) => {
         if (!result) {
-            res.status(404).send({ message: "Not found Stadium with name " + req.params.name });
-        } else {
+            res.status(404).send({ message: "Not found Stadium with id " + req.params.id });
+        }
+        else{
             res.send(result);
         }
     }
     ).catch((err) => {
-        res.status(500).send({ message: "Error retrieving Stadium with name " + req.params.name });
+        res.status(404).send({ message: "Error retrieving Stadium with id " + req.params.id });
     }
     );
 }
 
 
 //@method: DELETE
-//@desc: delete stadium by name
+//@desc: delete stadium by id
 //@access: public
 //@status code: 200 - success, 400 - error empty request, 404 - not found, 500 - error in server
-exports.deleteStadiumByName = async (req, res) => {
-    if (!req.params.name) {
+exports.deleteStadiumByID = async (req, res) => {
+    if (!req.params.id) {
         res.status(400).send({ message: "Content can not be empty!" });
         return;
     }
-    Stadium.findOneAndDelete({ name: req.params.name }).then((result) => {
+    // find stadium by id
+    Stadium.findByIdAndDelete(req.params.id).then((result) => {
         if (!result) {
-            res.status(404).send({ message: "Not found Stadium with name " + req.params.name });
-        } else {
-            res.send({ message: "Stadium was deleted successfully." });
+            res.status(404).send({ message: "Not found Stadium with id " + req.params.id });
+        }
+        else{
+            res.send({ message: "Stadium was deleted successfully!" });
         }
     }
     ).catch((err) => {
-        res.status(500).send({ message: "Error retrieving Stadium with name " + req.params.name });
+        res.status(404).send({ message: "Error deleting Stadium with id " + req.params.id });
     }
     );
 }

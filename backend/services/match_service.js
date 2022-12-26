@@ -34,7 +34,11 @@ exports.createMatch = async (req, res) => {
 
             const match = new Match(req.body);
             match.save().then((result) => {
-                res.send(result);
+                if (!result) {
+                    res.status(500).send({ message: "Error creating match." });
+                } else {
+                    res.send(result);
+                }
             }).catch((err) => {
                 res.status(500).send({ message: err.message || "Some error occurred while creating user." });
             });
@@ -87,7 +91,6 @@ exports.findMatchByID = async (req, res) => {
 
 
 
-
 //@method: PUT
 //@desc: update a match by id
 //@access: public
@@ -135,17 +138,18 @@ exports.updateMatchID = async (req, res) => {
             );
         }).catch((err) => {
             res.status(500).send({ message: "Error retrieving Stadium with name " + req.body.stadiumname });
-        });}
-        else {
-            Match.findByIdAndUpdate(req.params.id, req.body , { useFindAndModify: false }).then((result) => {
-                if (!result) {
-                    res.status(404).send({ message: "Not found Match with id " + req.params.id });
-                } else {
-                    res.send({ message: "Match was updated successfully." });
-                }
+        });
+    }
+    else {
+        Match.findByIdAndUpdate(req.params.id, req.body , { useFindAndModify: false }).then((result) => {
+            if (!result) {
+                res.status(404).send({ message: "Not found Match with id " + req.params.id });
+            } else {
+                res.send({ message: "Match was updated successfully." });
             }
-            ).catch((err) => {
-                res.status(500).send({ message: "Error updating Match with id " + req.params.id });
-            });
-        }             
+        }
+        ).catch((err) => {
+            res.status(500).send({ message: "Error updating Match with id " + req.params.id });
+        });
+    }             
 }
