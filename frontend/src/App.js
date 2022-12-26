@@ -9,6 +9,7 @@ import AddStadium from './components/addstadium';
 import ViewSeats from './components/viewseats';
 import ViewMatch from './components/viewmatch';
 import EditCustomerData from './components/editcustomerdata';
+import SelectMatchToEdit from './components/selectmatchtoedit';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -19,7 +20,8 @@ function App() {
   return (
     <div className="App">
       {
-        <Register onFormSwitch = {toggleForm} />
+        <SelectMatchToEdit/>
+        //<Register onFormSwitch = {toggleForm} />
         //currentForm === "login" ? <Login onFormSwitch = {toggleForm} /> : <Register onFormSwitch = {toggleForm} />  
       }
     </div>

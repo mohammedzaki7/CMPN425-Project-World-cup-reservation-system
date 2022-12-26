@@ -77,11 +77,16 @@ const ViewSeats = (props) => {
                         let arr = [];
                         arr[0] = row;
                         arr[1] = col;
-                        
-                        if (arrayAlreadyHasArray(selectedVen['occupiedSeats'], arr))
+
+                        if(selectedVen['occupiedSeats'][row][col] == 1)
                         {
                             seatsArr.push(<div className="seat occupied" value={i} key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</div>);
                         }
+                        
+                        // if (arrayAlreadyHasArray(selectedVen['occupiedSeats'], arr))
+                        // {
+                        //     seatsArr.push(<div className="seat occupied" value={i} key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</div>);
+                        // }
                         else
                         {
                             seatsArr.push(<div className="seat" value={i} key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</div>); 

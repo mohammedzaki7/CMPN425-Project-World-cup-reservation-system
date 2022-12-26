@@ -25,14 +25,13 @@ const AddMatch = (props) => {
     const [linesman1, setLinesman1] = useState('');
     const [linesman2, setLinesman2] = useState('');
     const [selectedVenues, setSelectedVenues] = useState([]);
+    const apiURL = 'http://localhost:4000/matches' ;
 
     
     axios.get('http://localhost:4000/venues')
     .then((response) => {
         const data = response.data;
         setSelectedVenues(data);
-        console.log('received venues');
-        console.log(data);
 
     }).catch(() => {
         alert('Error retrieving data');
@@ -40,8 +39,22 @@ const AddMatch = (props) => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        console.log(team1);
-        console.log(team2);
+        const matchInfo = {
+            teamone : team1,
+            teamtwo : team2,
+            stadium : venue,
+            dateee : date,
+            refereeee : referee,
+            linesmanone : linesman1,
+            linesmantwo : linesman2
+        }
+        console.log(matchInfo)
+        axios.post( apiURL , matchInfo ) //json server
+        .then(response => {
+        console.log(response)
+        }).catch((e) => {
+            alert(e);
+        })
     }
 
     
@@ -53,7 +66,7 @@ const AddMatch = (props) => {
 
                     <label htmlFor = "team1">Home team</label> 
                     <select value = {team1} onChange = {
-                    (e) => setTeam1(e.target.value)} id = "team1" name="team1">
+                    (e) => setTeam1(e.target.value)} id = "team1" name="team1" required>
                     
                     <option value="">-- select one --</option>
                     <option value="Argentina">Argentina</option>
@@ -93,12 +106,12 @@ const AddMatch = (props) => {
                     <option value="Tunisia">Tunisia</option>
                     <option value="Uruguay">Uruguay</option>
                     <option value="USA">USA</option>
-                    <option value="Whales">Whales</option>
+                    <option value="Whales">Whales</option> required
                     </select> 
 
                     <label htmlFor = "team2">Away team</label> 
                     <select value = {team2} onChange = {
-                    (e) => setTeam2(e.target.value)} id = "team2" name="team2">
+                    (e) => setTeam2(e.target.value)} id = "team2" name="team2" required>
                     
                     <option value="">-- select one --</option>
                     <option value="Argentina">Argentina</option>
@@ -138,38 +151,37 @@ const AddMatch = (props) => {
                     <option value="Tunisia">Tunisia</option>
                     <option value="Uruguay">Uruguay</option>
                     <option value="USA">USA</option>
-                    <option value="Whales">Whales</option>
+                    <option value="Whales">Whales</option> 
                     </select> 
 
                     <label htmlFor = "venue">Venue</label> 
                     <select value = {venue} onChange = {
-                    (e) => setVenue(e.target.value)} id = "venue" name="venue">
+                    (e) => setVenue(e.target.value)} id = "venue" name="venue" required>
                         <option value="">-- select one --</option>
                         {selectedVenues.map((selectedVenues, index) => 
-                        <option value={selectedVenues['names']}>{selectedVenues['name']}</option>
+                        <option key = {index} value={selectedVenues['names']}>{selectedVenues['name']}</option>
                         )}
                         </select> 
 
                     <label htmlFor = "date">Date and time</label> 
                     <input value = {date} onChange = {
-                        (e) => setDate(e.target.value)} type = "text" id = "date" name = "date" /> 
+                        (e) => setDate(e.target.value)} type = "date" id = "date" name = "date" required/> 
 
                     <label htmlFor = "referee">Referee</label> 
                     <input value = {referee} onChange = {
-                        (e) => setReferee(e.target.value)} type = "text" id = "referee" name = "referee" /> 
+                        (e) => setReferee(e.target.value)} type = "text" id = "referee" name = "referee" required/> 
 
                     <label htmlFor = "linesman1">First linesman</label> 
                     <input value = {linesman1} onChange = {
-                        (e) => setLinesman1(e.target.value)} type = "text" id = "linesman1" name = "linesman1" /> 
+                        (e) => setLinesman1(e.target.value)} type = "text" id = "linesman1" name = "linesman1" required/> 
 
                     <label htmlFor = "linesman2">Second linesman</label> 
                     <input value = {linesman2} onChange = {
-                        (e) => setLinesman2(e.target.value)} type = "text" id = "linesman2" name = "linesman2" /> 
+                        (e) => setLinesman2(e.target.value)} type = "text" id = "linesman2" name = "linesman2" required/> 
         
                     <button className="loginOrRegister" type = "submit">Add Match</button>
         
                 </form>
-                <button className="link-btn" onClick = {() => props.onFormSwitch('register')}> Don't have an account? Register here</button>
             </div>
                     
             );

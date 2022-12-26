@@ -20,10 +20,22 @@ const AddStadium = (props) => {
     const [stadiumName, setStadiumName] = useState('');
     const [rowsNumber, setRowsNumber] = useState('');
     const [seatsNumberPerRow, setSeatsNumberPerRow] = useState('');
+    const apiURL = 'http://localhost:4000/venues' ;
     
     const handleSubmit = (e) =>{
         e.preventDefault();
-        console.log(stadiumName);
+        const stadiumInfo = {
+            name : stadiumName,
+            rowsNumber : rowsNumber,
+            seatsNumberPerRow : seatsNumberPerRow
+        }
+        console.log(stadiumInfo)
+        axios.post( apiURL , stadiumInfo ) //json server
+        .then(response => {
+        console.log(response)
+        }).catch((e) => {
+            alert(e);
+        })
     }
     
     return (
@@ -33,15 +45,15 @@ const AddStadium = (props) => {
 
                     <label htmlFor = "stadiumName">Stadium name</label>   
                     <input value = {stadiumName} onChange = {
-                        (e) => setStadiumName(e.target.value)} type = "text" id = "stadiumName" name = "stadiumName" />   
+                        (e) => setStadiumName(e.target.value)} type = "text" id = "stadiumName" name = "stadiumName" required/>   
 
                     <label htmlFor = "rowsNumber">Number of rows</label>   
                     <input value = {rowsNumber} onChange = {
-                        (e) => setRowsNumber(e.target.value)} type = "text" id = "rowsNumber" name = "rowsNumber" />   
+                        (e) => setRowsNumber(e.target.value)} type = "text" id = "rowsNumber" name = "rowsNumber" required/>   
 
                     <label htmlFor = "seatsNumberPerRow">Number of seats per row</label>   
                     <input value = {seatsNumberPerRow} onChange = {
-                        (e) => setSeatsNumberPerRow(e.target.value)} type = "text" id = "seatsNumberPerRow" name = "seatsNumberPerRow" />   
+                        (e) => setSeatsNumberPerRow(e.target.value)} type = "text" id = "seatsNumberPerRow" name = "seatsNumberPerRow" required/>   
 
                     <button className="loginOrRegister" type = "submit">Add Match</button>
         
