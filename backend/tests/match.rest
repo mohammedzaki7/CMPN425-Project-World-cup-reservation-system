@@ -1,0 +1,54 @@
+GET  http://localhost:3000/match/view/seats
+
+
+###
+
+GET  http://localhost:3000/match/view/noseats
+
+
+###
+
+
+GET http://localhost:3000/match/search/63a63172a19836ffd43ebbce
+
+
+###
+
+
+
+PUT http://localhost:3000/match/update/63a70c3b67e1285da476f075
+Content-Type: application/json
+
+{
+    "teamone": "America",
+    "teamtwo": "England",
+    "stadiumname": "medium Stadium"
+}
+
+###
+
+POST http://localhost:3000/match/create
+Content-Type: application/json
+
+{
+    "teamone": "Belgium",
+    "teamtwo": "Senegal",
+    "stadiumname": "Qatar International Stadium",
+    "date": "2018-06-21T18:22:00.000Z",
+    "referee": "Nestor Pitana",
+    "linesmen": [ "Juan Pablo Belatti", "Eduardo Cardozo"]
+}
+
+###
+
+POST http://localhost:3000/match/create
+Content-Type: application/json
+
+{
+    "teamone": "Qatar",
+    "teamtwo": "Brazil",
+    "stadiumname": "small Stadium",
+    "date": "2022-06-21T18:18:00.000Z",
+    "referee": "Nestor Pitana",
+    "linesmen": [ "Juan Pablo Belatti", "Eduardo Cardozo"]
+}

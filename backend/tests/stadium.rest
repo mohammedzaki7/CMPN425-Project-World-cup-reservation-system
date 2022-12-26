@@ -1,0 +1,31 @@
+GET http://localhost:3000/stadium/search/63a9a4b189d174cd6da22e8d
+
+###
+
+GET http://localhost:3000/stadium/view
+###
+
+DELETE  http://localhost:3000/stadium/delete/Doha International Stadium
+
+###
+
+POST http://localhost:3000/stadium/create
+Content-Type: application/json
+
+{
+    "name": "Doha International Stadium",
+    "length": 100,
+    "width": 100
+}
+
+
+###
+
+POST http://localhost:3000/stadium/create
+Content-Type: application/json
+
+{
+    "name": "medium Stadium",
+    "length": 10,
+    "width": 10
+}

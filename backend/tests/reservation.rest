@@ -1,0 +1,31 @@
+# 1. Getter for match reservations
+GET http://localhost:3000/reservation/match/63a63172a19836ffd43ebbce
+
+###
+# 2. Getter for users reservations
+GET http://localhost:3000/reservation/user/63a6e4477050a4b115874a84
+
+###
+
+DELETE http://localhost:3000/reservation/delete/63a6e91898adcca91cf9c794
+
+###
+
+POST http://localhost:3000/reservation/create
+Content-Type: application/json
+
+{
+    "userid": "63a6e4477050a4b115874a84",
+    "matchid": "63a63172a19836ffd43ebbce",
+    "seat": [1 , 2]
+}
+
+###
+POST http://localhost:3000/reservation/create
+Content-Type: application/json
+
+{
+    "userid": "63a6d9bc2c57b1b541d46464",
+    "matchid": "63a62d026ee53b06d823245e",
+    "seat": [1 , 2]
+}
