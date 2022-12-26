@@ -1,4 +1,23 @@
-# Getting Started with Create React App
+# 1- Backend 
+To be able to do the following commands, go to the backend folder
+
+## Requirements
+
+```bash
+npm install
+```
+
+## Run server
+
+```bash
+npm start
+```
+
+
+
+# 2- Frontend
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
