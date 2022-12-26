@@ -1,47 +1,22 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import axios from 'axios';
 
-const arrayAlreadyHasArray = (arr, subarr) => {
-    for(var i = 0; i<arr.length; i++){
-        let checker = false
-        for(var j = 0; j<arr[i].length; j++){
-            if(arr[i][j] === subarr[j]){
-                checker = true
-            } else {
-                checker = false
-                break;
-            }
-        }
-        if (checker){
-            return true
-        }
-    }
-    return false
-}
-
 const ViewSeats = (props) => {
-    const [selectedVenues, setSelectedVenues] = useState([]);
+    const [matches, setMatches] = useState([]);
+
     
-    axios.get('http://localhost:4000/venues')
-    .then((response) => {
+    useEffect(() => {
+        axios.get('http://localhost:4000/matches')
+        .then((response) => {
         const data = response.data;
-        setSelectedVenues(data);
+        setMatches(data);
         // console.log('received venues');
         // console.log(data);
 
-    }).catch(() => {
-        alert('Error retrieving data');
-    })
-
-    const displayVenues = (selectedVens) => 
-    {
-        return selectedVens.map((selectedVens, index) => 
-        <option value={selectedVens['names']}>{selectedVens['name']}</option>)
-    };
-
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-    }
+        }).catch(() => {
+            alert('Error retrieving data');
+        })
+    }, []);
     
     return (
         <div className="stadiums">
@@ -59,18 +34,21 @@ const ViewSeats = (props) => {
 
             </ul>
 
-            {selectedVenues.map((selectedVen, index) => 
+            {matches.map((match, index) => 
                 // <option value={selectedVenues['names']}>{selectedVenues['name']}</option>
                 // <div className="container">
                 <div className="container" key={index}>
-                    <h3 className="title">{selectedVen['name']}</h3>
+                    <h3 className="title">{match['teamone']} VS {match['teamtwo']}</h3>
+                    <h5>{match['stadium']}</h5>
                 {(() => {
                     const seatsArr = [];
                     let row = 0;
                     let col = 0;
-                    for (let i = 0; i < selectedVen['rowsNumber'] * selectedVen['seatsNumberPerRow']; i++) {
+                    const rows = match['seats'].length;
+                    const columns = match['seats'][0].length;
+                    for (let i = 0; i < rows * columns; i++) {
                         // rowsArr.push(<option value={i} key ={i}>{i}</option>);
-                        if (i % selectedVen['seatsNumberPerRow'] == 0) {
+                        if (i % columns === 0) {
                             seatsArr.push(<br key={i+1000}></br>)
                         }
 
@@ -78,7 +56,7 @@ const ViewSeats = (props) => {
                         arr[0] = row;
                         arr[1] = col;
 
-                        if(selectedVen['occupiedSeats'][row][col] == 1)
+                        if(match['seats'][row][col] === 1)
                         {
                             seatsArr.push(<div className="seat occupied" value={i} key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</div>);
                         }
@@ -94,7 +72,7 @@ const ViewSeats = (props) => {
                         
                         col += 1;
 
-                        if (col == selectedVen['seatsNumberPerRow'])
+                        if (col === columns)
                         {
                             col = 0;
                             row += 1;

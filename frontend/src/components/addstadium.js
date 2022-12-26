@@ -37,6 +37,10 @@ const AddStadium = (props) => {
             alert(e);
         })
     }
+
+    const refreshPage = ()=>{
+        window.location.reload();
+    }
     
     return (
             <div className = "auth-form-container"> 
@@ -55,10 +59,9 @@ const AddStadium = (props) => {
                     <input value = {seatsNumberPerRow} onChange = {
                         (e) => setSeatsNumberPerRow(e.target.value)} type = "text" id = "seatsNumberPerRow" name = "seatsNumberPerRow" required/>   
 
-                    <button className="loginOrRegister" type = "submit">Add Match</button>
+                    <button className="loginOrRegister" type = "submit" onClick={refreshPage}>Add Match</button>
         
                 </form>
-                <button className="link-btn" onClick = {() => props.onFormSwitch('register')}> Don't have an account? Register here</button>
             </div>
                     
             );

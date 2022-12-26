@@ -87,6 +87,21 @@ button {
   background-color: rgb(152, 18, 18);
 }
 
+.seat.seatselected {
+  cursor: pointer;
+  transform: scale(1.2);
+  background-color: rgb(15, 194, 45);
+}
+
+.seat.canreserve {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.seat.seatsdescriptionselected {
+  background-color: rgb(15, 194, 45);
+}
+
 .title {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -104,6 +119,7 @@ button {
 .teams {
   margin: 5px;
 }
+
 /* .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -57,6 +57,9 @@ const AddMatch = (props) => {
         })
     }
 
+    const refreshPage = ()=>{
+        window.location.reload();
+    }
     
     
     return (
@@ -179,7 +182,7 @@ const AddMatch = (props) => {
                     <input value = {linesman2} onChange = {
                         (e) => setLinesman2(e.target.value)} type = "text" id = "linesman2" name = "linesman2" required/> 
         
-                    <button className="loginOrRegister" type = "submit">Add Match</button>
+                    <button className="loginOrRegister" type = "submit" onClick={refreshPage}>Add Match</button>
         
                 </form>
             </div>

@@ -1,6 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
 
 
 
@@ -45,7 +44,7 @@ const EditMatch = (props) => {
         })
         }, [id]);
 
-     const handleSubmit = (e) =>{
+    const handleSubmit = (e) =>{
         e.preventDefault();
 
         const matchInfo = {
@@ -63,6 +62,10 @@ const EditMatch = (props) => {
         }).catch((e) => {
             alert(e);
         })
+    }
+
+    const refreshPage = ()=>{
+        window.location.reload();
     }
 
     
@@ -187,7 +190,7 @@ const EditMatch = (props) => {
                         <input value = {linesman2} onChange = {
                             (e) => setLinesman2(e.target.value)} type = "text" id = "linesman2" name = "linesman2" placeholder={linesman2}/>  
             
-                        <button className="loginOrRegister" type = "submit">Edit Match</button>
+                        <button className="loginOrRegister" type = "submit" onClick={refreshPage}>Edit Match</button>
                     </form>
                     </div>
                 

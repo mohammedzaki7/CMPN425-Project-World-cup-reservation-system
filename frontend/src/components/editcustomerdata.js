@@ -1,46 +1,79 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
-// const getVenues = () => {
-//     axios.get('/api')
-//     .then((response) => {
-//         const data = response.data;
-//     }).catch(() => {
-//         alert('Error retrieving data');
-//     })
-// }
-
-// const displayVenues = (selectedVens) => 
-// {
-//     return selectedVens.map((selectedVens, index) => 
-//     <option value={selectedVens['names']}>{selectedVens['name']}</option>)
-// };
 
 const EditCustomerData = (props) => {
-    const [pass, setPass] = useState('');
+    const [password, setPass] = useState('');
+    const [password2, setPass2] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [gender, setGender] = useState('');
-    const [nationality, setNationality] = useState('');
     const [role, setRole] = useState('');
+    const [nationality, setNationality] = useState('');
 
-    const onSubmit = () => {
-        const uid = 1
-        const data = {
-            uid, 
-            firstName,
-            lastName,
-            birthDate,
-            gender,
-            nationality,
-            role
+
+    const apiURL = 'http://localhost:4000/users' ;
+    
+    const id = 1;
+    console.log(id);
+
+    useEffect(() => {
+        axios.get(apiURL+"/"+id) // 1 will be changed to id
+        .then((response) => {
+        const data = response.data;
+
+        setPass(data['password']);
+        setFirstName(data['firstname']);
+        setLastName(data['lastname']);
+        setBirthDate(data['birthdate']);
+        setGender(data['gender']);
+        setNationality(data['nationality'])
+        setRole(data['role']);
+
+
+        }).catch(() => {
+            alert('Error retrieving data');
+        })
+        }, []);
+
+        const handleSubmit = (e) =>{
+            e.preventDefault();
+            
+            password2 ? setPass(password2) : setPass(password2);
+            console.log(password);
+            console.log(password2);
+            
+            var userInfo = {}
+            password2 ? userInfo = {
+                password : password2,
+                firstname : firstName,
+                lastname : lastName,
+                birthdate : birthDate,
+                gender : gender,
+                nationality : nationality,
+                role : role
+            } : 
+            userInfo = {
+                password : password,
+                firstname : firstName,
+                lastname : lastName,
+                birthdate : birthDate,
+                gender : gender,
+                nationality : nationality,
+                role : role
+            }
+            axios.patch( apiURL+"/"+id, userInfo ) //json server 1 will be changed to id
+            .then(response => {
+            console.log(response)
+            }).catch((e) => {
+                alert(e);
+            })
         }
 
-    }
-
-    const handleSubmit = (e) =>{
-        e.preventDefault();
+    const refreshPage = ()=>{
+        window.location.reload();
     }
 
 
@@ -50,32 +83,32 @@ const EditCustomerData = (props) => {
         <h2>Edit your data</h2>
 
         <form className='register-form' onSubmit={handleSubmit}>
-            <label htmlFor = "password">password</label>
-            <input value = {pass} onChange = {
-                (e) => this.setPass(e.target.value)} type = "password" id = "password" name = "password" />
-
-            <label htmlFor = "firstName">firstName</label>
+            <label htmlFor = "password">Password</label>
+            <input value = {password2} onChange = {
+                (e) => setPass2(e.target.value)} type = "password" id = "password" name = "password" />
+                
+            <label htmlFor = "firstName">First name</label>
             <input value = {firstName} onChange = {
                 (e) => setFirstName(e.target.value)} type = "text" id = "firstName" name = "firstName" />
 
-            <label htmlFor = "lastName">lastName</label>
+            <label htmlFor = "lastName">Last name</label>
             <input value = {lastName} onChange = {
                 (e) => setLastName(e.target.value)} type = "text" id = "lastName" name = "lastName" />
 
-            <label htmlFor = "birthDate">birthDate</label>
+            <label htmlFor = "birthDate">Birthdate</label>
             <input value = {birthDate} onChange = {
                 (e) => setBirthDate(e.target.value)} type = "date" id = "birthDate" name = "birthDate" />
 
-            <label htmlFor = "gender">gender</label>
+            <label htmlFor = "gender">Gender</label>
             <input value = {gender} onChange = {
-                (e) => setGender("male")} type = "radio" id = "gender" name = "gender" />Male 
+                (e) => setGender("male")} type = "radio" id = "gender" name = "gender" checked={gender === "male"}/>Male 
             <input value = {gender} onChange = {
-                (e) => setGender("female")} type = "radio" id = "gender" name = "gender" />Female
+                (e) => setGender("female")} type = "radio" id = "gender" name = "gender" checked={gender === "female"}/>Female
 
-            <label htmlFor = "nationality">nationality</label>
+            <label htmlFor = "nationality">Nationality</label>
             <select value = {nationality} onChange = {
                 (e) => setNationality(e.target.value)} id = "nationality" name="nationality">
-                <option value="">-- select one --</option>
+                <option value="">{nationality}</option>
                 <option value="afghan">Afghan</option>
                 <option value="albanian">Albanian</option>
                 <option value="algerian">Algerian</option>
@@ -269,15 +302,15 @@ const EditCustomerData = (props) => {
                 <option value="zimbabwean">Zimbabwean</option>
             </select>
 
-            <label htmlFor = "role">role</label>
+            <label htmlFor = "role">Role</label>
             <select value = {role} onChange = {
                 (e) => setRole(e.target.value)} id = "role" name="role">
-                <option value="">-- select role --</option>
-                <option value="manager">Manager</option>
-                <option value="fan">Fan</option>
+                <option value="">{role}</option>
+                <option value="manager">manager</option>
+                <option value="fan">fan</option>
             </select>
 
-            <button className="loginOrRegister" type = "submit">Update</button>
+            <button className="loginOrRegister" type = "submit" onClick={refreshPage}>Update</button>
 
         </form>
     </div>
