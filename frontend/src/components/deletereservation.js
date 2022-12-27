@@ -21,47 +21,9 @@ function arrayAlreadyHasArray(arr, subarr){
     return false
 }
 
-function removeItemOnce(arr, value) {
-    var index = arr.indexOf(value);
-    if (index > -1) {
-      arr.splice(index, 1);
-    }
-    return arr;
-  }
-
-  function removeItemAll(arr, value) {
-    var i = 0;
-    while (i < arr.length) {
-      if (arr[i] === value) {
-        arr.splice(i, 1);
-      } else {
-        ++i;
-      }
-    }
-    return arr;
-  }
-
-  function deleteRow(arr, row) {
-    arr = arr.slice(0); // make copy
-    arr.splice(row - 1, 1);
-    return arr;
- }
 
 
-function multiDimensionalUnique(arr) {
-    var uniques = [];
-    var itemsFound = {};
-    for(var i = 0, l = arr.length; i < l; i++) {
-        var stringified = JSON.stringify(arr[i]);
-        if(itemsFound[stringified]) { continue; }
-        uniques.push(arr[i]);
-        itemsFound[stringified] = true;
-    }
-    return uniques;
-}
-
-
-const ReserveSeat = (props) => {
+const DeleteReservation = (props) => {
     const [creditCardNumber, setCreditCardNumber] = useState('');
     const [pin, setPin] = useState('');
     const [team1, setTeam1] = useState('');
@@ -86,7 +48,7 @@ const ReserveSeat = (props) => {
     // console.log(id);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/matches/'+id)
+        axios.get('http://localhost:4000/reservations/'+id)
         .then((response) => {
             const data = response.data;
             setTeam1(data['teamone']);
@@ -217,17 +179,17 @@ const ReserveSeat = (props) => {
             <ul className="showcase">
                 <li>
                     <div className="seat available ">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                    <small>Available seat</small>
+                    <small>Unreserved seat</small>
                 </li>
 
                 <li>
                     <div className="seat occupied ">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                    <small>Occupied seat</small>
+                    <small>Cancel seat</small>
                 </li> 
 
                 <li>
                     <div className="seat seatsdescriptionselected \">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                    <small>Selected seat</small>
+                    <small>Reserved seat</small>
                 </li> 
 
             </ul>
@@ -279,4 +241,4 @@ const ReserveSeat = (props) => {
             );
 }
 
-export default ReserveSeat;
+export default DeleteReservation;
