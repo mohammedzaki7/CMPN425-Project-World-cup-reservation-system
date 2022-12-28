@@ -51,7 +51,7 @@
         [
           1,
           1,
-          1
+          0
         ],
         [
           1,
@@ -129,5 +129,18 @@
       "id": "VVQiD6v"
     }
   ],
-  "reservations": []
+  "reservations": [
+    {
+      "ccn": "75",
+      "pin": "4",
+      "matchid": "1",
+      "userid": 1,
+      "createdAt": "2022-12-26T12:00:27.257Z",
+      "seat": [
+        1,
+        1
+      ],
+      "id": 2
+    }
+  ]
 }

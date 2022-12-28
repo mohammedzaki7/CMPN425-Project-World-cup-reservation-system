@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import Login from "./components/login"
@@ -23,7 +24,13 @@ function App() {
   return (
     <div className="App">
       {
-        <DeleteReservation/>
+        <Router>
+          <div>
+            <DeleteReservation/>
+          </div>
+          
+        </Router>
+        
         //<Register onFormSwitch = {toggleForm} />
         //currentForm === "login" ? <Login onFormSwitch = {toggleForm} /> : <Register onFormSwitch = {toggleForm} />  
       }

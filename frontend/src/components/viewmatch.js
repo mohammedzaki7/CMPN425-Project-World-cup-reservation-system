@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
 
 // const getVenues = () => {
@@ -20,16 +20,20 @@ const ViewMatch = (props) => {
     const [matches, setMatches] = useState([]);
 
     
-    axios.get('http://localhost:4000/matches')
-    .then((response) => {
+    useEffect(() => {
+        axios.get('http://localhost:4000/matches')
+        .then((response) => {
         const data = response.data;
         setMatches(data);
-        console.log('received venues');
-        console.log(data);
 
     }).catch(() => {
         alert('Error retrieving data');
     })
+
+        }, []);
+
+
+    
 
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -38,15 +42,15 @@ const ViewMatch = (props) => {
     
     return (
             <div className="stadiums"> 
-                <h2>View Matches</h2>
+                <h1>Upcoming matches</h1>
                 {matches.map((match, index) => 
-                    <div className="match">
-                        <p className="teams">{match['team1']} : {match['team2']}</p>
-                        <small>Stadium : {match['venue']}</small><br></br>
-                        <small>Date and time : {match['date']}</small><br></br>
-                        <small>Referee : {match['referee']}</small><br></br>
-                        <small>First linesman : {match['linesman1']}</small><br></br>
-                        <small>Second linesman : {match['linesman2']}</small><br></br>
+                    <div className="match" key = {index}>
+                        <h3 className="teams">{match['teamone']} VS {match['teamtwo']}</h3>
+                        <small>Stadium : {match['stadium']}</small><br></br>
+                        <small>Date and time : {match['dateee']}</small><br></br>
+                        <small>Referee : {match['refereee']}</small><br></br>
+                        <small>First linesman : {match['linesmanone']}</small><br></br>
+                        <small>Second linesman : {match['linesmantwo']}</small><br></br>
                     </div>
                 )}
             </div>
