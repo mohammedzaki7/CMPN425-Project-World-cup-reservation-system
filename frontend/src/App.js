@@ -12,6 +12,7 @@ import EditCustomerData from './components/editcustomerdata';
 import SelectMatchToEdit from './components/selectmatchtoedit';
 import ReserveSeat from './components/reserveseat';
 import SelectMatchToReserve from './selectmatchtoreserve';
+import DeleteReservation from './components/deletereservation';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -22,7 +23,7 @@ function App() {
   return (
     <div className="App">
       {
-        <SelectMatchToReserve/>
+        <DeleteReservation/>
         //<Register onFormSwitch = {toggleForm} />
         //currentForm === "login" ? <Login onFormSwitch = {toggleForm} /> : <Register onFormSwitch = {toggleForm} />  
       }

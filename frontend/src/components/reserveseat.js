@@ -80,7 +80,7 @@ const ReserveSeat = (props) => {
     
     
 
-
+    const userid = 1;
     const apiURL = 'http://localhost:4000/reservations' ;
     const id = props.onIdChange;
     // console.log(id);
@@ -118,6 +118,7 @@ const ReserveSeat = (props) => {
                 ccn : creditCardNumber,
                 pin : pin,
                 matchid : id,
+                userid : userid,
                 createdAt : currentDate,
                 seat : selectedSeats[i]
                 }
