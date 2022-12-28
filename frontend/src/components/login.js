@@ -1,31 +1,95 @@
 import React, { Component, useState } from 'react';
+import axios from 'axios';
+import SelectMatchToReserve from './selectmatchtoreserve';
 
 const Login = (props) => {
     const [username, setUsername] = useState('');
     const [pass, setPass] = useState('');
+    const [success, setSuccess] = useState(false);
+    const [userId, setUserId] = useState(0);
 
-    const handleSubmit = (e) =>{
+    const apiURL = 'http://localhost:4000/users' ;
+
+
+    const handleSubmit = async (e) =>{
         e.preventDefault();
-        console.log(username);
+        const response = await axios.get(apiURL
+            , {params: {
+                username : username,
+                password : pass
+                }
+            })
+            //,JSON.stringify({ username, pass }))
+            .then((response) => {
+                const data = response.data;
+                console.log(data);
+                if (data.length > 0)
+                {
+                    setSuccess(true);
+                    setUserId(data[0]['id']);
+                }
+                else
+                {
+                    alert('User does not exist');
+                    refreshPage();
+                }
+                }).catch(() => {
+                    alert('User does not exist');
+                    refreshPage();
+                });
+    }
+
+    const refreshPage = ()=>{
+        window.location.reload();
     }
     
     return (
-        <div className = "auth-form-container"> 
+        <>
+        {
+            success? 
+            (
+                <div>
+                    <h1>Welcome in {userId}</h1>
+                    <SelectMatchToReserve onUserIdChange={userId}/>
+                </div>
+            
+
+
+            ) : (
+                <div className = "auth-form-container"> 
             <h2>Login</h2>
             <form className='login-form' onSubmit={handleSubmit}>
                 <label htmlFor = "username">username</label>
                 <input value = {username} onChange = {
-                    (e) => setUsername(e.target.value)} type = "text" id = "username" name = "username" />
+                    (e) => setUsername(e.target.value)} type = "text" id = "username" name = "username" required/>
     
                 <label htmlFor = "password">password</label>
                 <input value = {pass} onChange = {
-                    (e) => this.setPass(e.target.value)} type = "password" id = "password" name = "password" />
+                    (e) => setPass(e.target.value)} type = "password" id = "password" name = "password" required/>
     
                 <button className="loginOrRegister" type = "submit"> Log In</button>
     
             </form>
             <button className="link-btn" onClick = {() => props.onFormSwitch('register')}> Don't have an account? Register here</button>
-        </div>   
+        </div>
+            )
+        }</>
+        // <div className = "auth-form-container"> 
+        //     <h2>Login</h2>
+        //     <form className='login-form' onSubmit={handleSubmit}>
+        //         <label htmlFor = "username">username</label>
+        //         <input value = {username} onChange = {
+        //             (e) => setUsername(e.target.value)} type = "text" id = "username" name = "username" />
+    
+        //         <label htmlFor = "password">password</label>
+        //         <input value = {pass} onChange = {
+        //             (e) => this.setPass(e.target.value)} type = "password" id = "password" name = "password" />
+    
+        //         <button className="loginOrRegister" type = "submit"> Log In</button>
+    
+        //     </form>
+        //     <button className="link-btn" onClick = {() => props.onFormSwitch('register')}> Don't have an account? Register here</button>
+        // </div>   
         );
 }
 

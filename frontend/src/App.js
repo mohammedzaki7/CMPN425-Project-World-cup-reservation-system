@@ -12,7 +12,7 @@ import ViewMatch from './components/viewmatch';
 import EditCustomerData from './components/editcustomerdata';
 import SelectMatchToEdit from './components/selectmatchtoedit';
 import ReserveSeat from './components/reserveseat';
-import SelectMatchToReserve from './selectmatchtoreserve';
+import SelectMatchToReserve from './components/selectmatchtoreserve';
 import DeleteReservation from './components/deletereservation';
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
       {
         <Router>
           <div>
-            <DeleteReservation/>
+            <Login/>
           </div>
           
         </Router>

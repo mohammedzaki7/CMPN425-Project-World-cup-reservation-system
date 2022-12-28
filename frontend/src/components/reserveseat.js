@@ -80,13 +80,13 @@ const ReserveSeat = (props) => {
     
     
 
-    const userid = 1;
+    const matchid = props.onMatchIdChange;  // match id
+    const userId = props.onUserIdChange;  // user id
     const apiURL = 'http://localhost:4000/reservations' ;
-    const id = props.onIdChange;
     // console.log(id);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/matches/'+id)
+        axios.get('http://localhost:4000/matches/'+matchid)
         .then((response) => {
             const data = response.data;
             setTeam1(data['teamone']);
@@ -101,7 +101,7 @@ const ReserveSeat = (props) => {
         }).catch(() => {
             alert('Error retrieving data');
         })
-        }, [id]);
+        }, [matchid]);
 
         const handleSubmit = (e) =>{
             e.preventDefault();
@@ -117,8 +117,8 @@ const ReserveSeat = (props) => {
                 const reservationInfo = {
                 ccn : creditCardNumber,
                 pin : pin,
-                matchid : id,
-                userid : userid,
+                matchid : matchid,
+                userid : userId,
                 createdAt : currentDate,
                 seat : selectedSeats[i]
                 }
@@ -136,7 +136,7 @@ const ReserveSeat = (props) => {
                 seats : currentSeats
             }
 
-            axios.patch( 'http://localhost:4000/matches/' + id, matchInfo ) //json server
+            axios.patch( 'http://localhost:4000/matches/' + matchid, matchInfo ) //json server
             .then(response => {
             console.log(response)
             }).catch((e) => {

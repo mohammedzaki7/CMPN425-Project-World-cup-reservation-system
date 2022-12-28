@@ -9,16 +9,6 @@ import moment from 'moment';
 const DeleteReservation = (props) => {
     const [matches, setMatches] = useState([]);
     const [reservations, setReservations] = useState([]);
-    const [creditCardNumber, setCreditCardNumber] = useState('');
-    const [pin, setPin] = useState('');
-    const [team1, setTeam1] = useState('');
-    const [team2, setTeam2] = useState('');
-    const [stadium, setStadium] = useState('');
-    const [date, setDate] = useState('');
-    const [seats, setSeats] = useState([[]]);
-    var [currentSeats, setCurrentSeats] = useState([[]]);
-    var [selectedSeats, setSelectedSeats] = useState([]);
-    const [count, setCount] = useState(0)
 
     // var [selectedSeats, setSelectedSeats] = useState([]);
 
