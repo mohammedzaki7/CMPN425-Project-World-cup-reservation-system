@@ -60,6 +60,18 @@ button {
   margin-top: 20px;
 }
 
+.approve{
+  margin-top: 20px;
+  background-color: rgb(41, 166, 41);
+  color: white;
+}
+
+.remove{
+  margin-top: 20px;
+  background-color: rgb(222, 19, 19);
+  color: white;
+}
+
 .seat {
   background-color: #444451;
   height: 12px;

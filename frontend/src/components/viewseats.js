@@ -60,11 +60,6 @@ const ViewSeats = (props) => {
                         {
                             seatsArr.push(<div className="seat occupied" value={i} key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</div>);
                         }
-                        
-                        // if (arrayAlreadyHasArray(selectedVen['occupiedSeats'], arr))
-                        // {
-                        //     seatsArr.push(<div className="seat occupied" value={i} key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</div>);
-                        // }
                         else
                         {
                             seatsArr.push(<div className="seat" value={i} key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</div>); 
@@ -77,28 +72,8 @@ const ViewSeats = (props) => {
                             col = 0;
                             row += 1;
                         }
-                        // console.log(selectedVen['occupiedSeats']);
-                        // console.log(arr)
-
-                        // if (selectedVen['occupiedSeats']['x'] == row && selectedVen['occupiedSeats']['y'] == col)
-                        //     seatsArr.push(<div className="seat occupied" value={i} key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</div>); 
-                        // else
-                        //     seatsArr.push(<div className="seat" value={i} key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</div>); 
-
                     }
                     return seatsArr
-
-                    // for (let i = 0; i < selectedVen['rowsNumber']; i++) {
-                    //     rowsArr.push(<option value={i} key ={i}>{i}</option>);
-                    //     const seatsArr = [];
-                    //     for (let j = 0; j < selectedVen['seatsNumberPerRow']; j++)
-                    //     {
-                    //         seatsArr.push(<div className="seat" value={i} key={i+j}>{j}</div>);
-                    //     }
-                    //     return seatsArr
-                    // }
-
-                //return rowsArr;
                 })()}
                 </div>
             )}

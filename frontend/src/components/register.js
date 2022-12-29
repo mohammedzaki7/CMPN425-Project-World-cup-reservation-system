@@ -1,6 +1,38 @@
 import React, { Component, useState } from 'react';
 import axios from 'axios';
 
+function ValidateEmail(mail) 
+{
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+    {
+        return (true)
+    }
+    alert("You have entered an invalid email address")
+    return (false)
+}
+
+function Validations(firstname, lastname, password, mail)
+{
+    if(isNaN(firstname)==false)
+    {
+        alert('First name can not contain a number');
+        return (false);
+    }
+    if(isNaN(lastname)==false)
+    {
+        alert('Last name can not contain a number');
+        return (false);
+    }
+    if(password.length < 8)
+    {
+        alert('Your password is too short');
+        return (false);
+    }
+    if (ValidateEmail(mail) == false)
+        return (false);
+    return (true);
+}
+
 const Register = (props) => {
 
     const [userName, setUserName] = useState('');
@@ -14,28 +46,41 @@ const Register = (props) => {
     const [role, setRole] = useState('');
     const apiURL = 'http://localhost:4000/users' ;
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
-        const userInfo = {
-            username : userName,
-            password : pass,
-            firstname : firstName,
-            lastname : lastName,
-            birthdate : birthDate,
-            gender : gender,
-            nationality : nationality,
-            email : email,
-            role : role
-        }
-        axios.post( apiURL , userInfo ) //json server
-        .then(response => {
-        console.log(response)
-        })
 
+    const handleSubmit = (e) =>{
+
+        if (Validations(firstName, lastName, pass, email))
+        {
+            e.preventDefault();
+            const userInfo = {
+                username : userName,
+                password : pass,
+                firstname : firstName,
+                lastname : lastName,
+                birthdate : birthDate,
+                gender : gender,
+                nationality : nationality,
+                email : email,
+                role : role,
+                approved : 'false'
+            }
+            axios.post( apiURL , userInfo ) //json server
+            .then(response => {
+            console.log(response)
+            })
+            alert('Wait for the administrator to approve');
+            refreshPage();
+
+        }
+        
+    }
+
+    const refreshPage = ()=>{
+        window.location.reload();
     }
 
     return (
-        <div className = "auth-form-container">  
+        <div className = "auth-form-container stadiums">  
 
             <h2>Register</h2>
 

@@ -14,6 +14,7 @@ import SelectMatchToEdit from './components/selectmatchtoedit';
 import ReserveSeat from './components/reserveseat';
 import SelectMatchToReserve from './components/selectmatchtoreserve';
 import DeleteReservation from './components/deletereservation';
+import AdminApprove from './components/adminapprove';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -26,7 +27,7 @@ function App() {
       {
         <Router>
           <div>
-            <Login/>
+            <AdminApprove/>
           </div>
           
         </Router>

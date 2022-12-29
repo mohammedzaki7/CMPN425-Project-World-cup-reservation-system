@@ -111,8 +111,9 @@ const DeleteReservation = (props) => {
             {reservations.map((reservation, index) =>
                 {
                     if (reservation['userid'] == id)
-                    return <div className="stadiums" key={index}>
-                        <h3 className="title">{reservation['matchid']} VS {reservation['matchid']}</h3>
+                    return 
+                    <div className="stadiums" key={index}>
+                        <h3 className="title">{reservation['teamone']} VS {reservation['teamtwo']}</h3>
                         <small>Seat is in row number: {reservation['seat'][0]} and column number: {reservation['seat'][1]}</small>
                         <br></br><button className="loginOrRegister" onClick={(e) => {
                         handleSubmit(e, reservation['seat'], reservation['id'], reservation['matchid'], reservation['createdAt'])

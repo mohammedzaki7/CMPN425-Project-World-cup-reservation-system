@@ -2,6 +2,25 @@ import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
+function Validations(firstname, lastname, password, mail)
+{
+    if(isNaN(firstname)==false)
+    {
+        alert('First name can not contain a number');
+        return (false);
+    }
+    if(isNaN(lastname)==false)
+    {
+        alert('Last name can not contain a number');
+        return (false);
+    }
+    if(password.length < 8)
+    {
+        alert('Your password is too short');
+        return (false);
+    }
+    return (true);
+}
 
 const EditCustomerData = (props) => {
     const [password, setPass] = useState('');
@@ -41,35 +60,39 @@ const EditCustomerData = (props) => {
         const handleSubmit = (e) =>{
             e.preventDefault();
             
-            password2 ? setPass(password2) : setPass(password2);
-            console.log(password);
-            console.log(password2);
-            
-            var userInfo = {}
-            password2 ? userInfo = {
-                password : password2,
-                firstname : firstName,
-                lastname : lastName,
-                birthdate : birthDate,
-                gender : gender,
-                nationality : nationality,
-                role : role
-            } : 
-            userInfo = {
-                password : password,
-                firstname : firstName,
-                lastname : lastName,
-                birthdate : birthDate,
-                gender : gender,
-                nationality : nationality,
-                role : role
+            if(Validations(firstName, lastName, password2))
+            {
+                password2 ? setPass(password2) : setPass(password2);
+                console.log(password);
+                console.log(password2);
+                
+                var userInfo = {}
+                password2 ? userInfo = {
+                    password : password2,
+                    firstname : firstName,
+                    lastname : lastName,
+                    birthdate : birthDate,
+                    gender : gender,
+                    nationality : nationality,
+                    role : role
+                } : 
+                userInfo = {
+                    password : password,
+                    firstname : firstName,
+                    lastname : lastName,
+                    birthdate : birthDate,
+                    gender : gender,
+                    nationality : nationality,
+                    role : role
+                }
+                axios.patch( apiURL+"/"+id, userInfo ) //json server 1 will be changed to id
+                .then(response => {
+                console.log(response)
+                }).catch((e) => {
+                    alert(e);
+                })
+                alert('Data is successfully updated');
             }
-            axios.patch( apiURL+"/"+id, userInfo ) //json server 1 will be changed to id
-            .then(response => {
-            console.log(response)
-            }).catch((e) => {
-                alert(e);
-            })
         }
 
     const refreshPage = ()=>{
@@ -78,7 +101,7 @@ const EditCustomerData = (props) => {
 
 
     return (
-        <div className = "auth-form-container">  
+        <div className = "auth-form-container stadiums">  
 
         <h2>Edit your data</h2>
 

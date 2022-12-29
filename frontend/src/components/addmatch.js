@@ -1,20 +1,30 @@
 import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
 
-// const getVenues = () => {
-//     axios.get('/api')
-//     .then((response) => {
-//         const data = response.data;
-//     }).catch(() => {
-//         alert('Error retrieving data');
-//     })
-// }
-
-// const displayVenues = (selectedVens) => 
-// {
-//     return selectedVens.map((selectedVens, index) => 
-//     <option value={selectedVens['names']}>{selectedVens['name']}</option>)
-// };
+function Validations(referee, linesman1, linesman2, teamone, teamtwo)
+{
+    if(isNaN(referee)==false)
+    {
+        alert('referee name can not contain a number');
+        return(false);
+    }
+    if(isNaN(linesman1)==false)
+    {
+        alert('First linesman name can not contain a number');
+        return(false);
+    }
+    if(isNaN(linesman2)==false)
+    {
+        alert('Second linesman name can not contain a number');
+        return(false);
+    }
+    if(teamone === teamtwo)
+    {
+        alert('Same team cannot play against itself');
+        return(false);
+    }
+    return (true);
+}
 
 const AddMatch = (props) => {
     const [team1, setTeam1] = useState('');
@@ -48,49 +58,48 @@ const AddMatch = (props) => {
     
     const handleSubmit = (e) =>{
 
-        alert(rowsNumber);
-        alert(columnsNumber);
+        if(Validations(referee, linesman1, linesman2, team1, team2))
+        {
+            var gfg = new Array(rowsNumber);
+      
+            // Loop to create 2D array using 1D array
+            for (var i = 0; i < rowsNumber; i++) {
+                gfg[i] = new Array(columnsNumber);
+            }
+            for (let i = 0 ; i < rowsNumber; i++)
+            {
+                for (let j = 0 ; j < columnsNumber; j++)
+                {
+                    gfg[i][j] = 0;
+                }
+            }
+            e.preventDefault();
+            const matchInfo = {
+                teamone : team1,
+                teamtwo : team2,
+                stadiumname : venueName,
+                date : date,
+                referee : referee,
+                linesmen : [
+                    linesman1,
+                    linesman2
+                ],
+                seats : gfg
+            }
+            console.log(matchInfo)
+            axios.post( apiURL , matchInfo ) //json server
+            .then(response => {
+            console.log(response)
+            // alert('Successfully added a new match');
+            }).catch((e) => {
+                alert(e);
+            })
+            alert('Successfully added a new match');
+            refreshPage();
+        }
 
         
-        var gfg = new Array(rowsNumber);
-      
-        // Loop to create 2D array using 1D array
-        for (var i = 0; i < rowsNumber; i++) {
-            gfg[i] = new Array(columnsNumber);
-        }
-
-        for (let i = 0 ; i < rowsNumber; i++)
-        {
-            for (let j = 0 ; j < columnsNumber; j++)
-            {
-                gfg[i][j] = 0;
-            }
-        }
-        let array1 = Array(rowsNumber).fill(0).map(row => new Array(columnsNumber).fill(0))
-        console.log(array1)
-        e.preventDefault();
-        const matchInfo = {
-            teamone : team1,
-            teamtwo : team2,
-            stadiumname : venueName,
-            date : date,
-            referee : referee,
-            linesmen : [
-                linesman1,
-                linesman2
-            ],
-            seats : gfg
-        }
-        console.log(matchInfo)
-        axios.post( apiURL , matchInfo ) //json server
-        .then(response => {
-        console.log(response)
-        alert('Successfully added a new match');
-        }).catch((e) => {
-            alert(e);
-        })
-        alert('waiting');
-        refreshPage()
+        
     }
 
     const refreshPage = ()=>{
@@ -99,7 +108,7 @@ const AddMatch = (props) => {
     
     
     return (
-            <div className = "auth-form-container"> 
+            <div className = "auth-form-container stadiums"> 
                 <h2>Add Match</h2>
                 <form className='login-form' onSubmit={(e) => 
                     {
@@ -195,7 +204,7 @@ const AddMatch = (props) => {
                     <option value="Whales">Whales</option> 
                     </select> 
 
-                    <label htmlFor = "venue">Venue</label> 
+                    <label htmlFor = "venue">Stadium</label> 
                     <select value = {venueName} onChange = {
                     (e) => {
                         setVenueName(e.target.value)

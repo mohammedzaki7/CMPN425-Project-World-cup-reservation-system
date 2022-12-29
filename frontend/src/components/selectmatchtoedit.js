@@ -32,6 +32,7 @@ const SelectMatchToEdit = (props) => {
         <div>
             
                 <div>
+                    <h2>Select a match to edit</h2>
                     <select value = {matchid} onChange = {
                     (e) => setMatchID(e.target.value)} id = "match" name="match">
                         <option value="">Select match</option>

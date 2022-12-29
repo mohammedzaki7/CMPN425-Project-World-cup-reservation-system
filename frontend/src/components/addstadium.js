@@ -1,20 +1,20 @@
 import React, { Component, useState } from 'react';
 import axios from 'axios';
 
-// const getVenues = () => {
-//     axios.get('/api')
-//     .then((response) => {
-//         const data = response.data;
-//     }).catch(() => {
-//         alert('Error retrieving data');
-//     })
-// }
-
-// const displayVenues = (selectedVens) => 
-// {
-//     return selectedVens.map((selectedVens, index) => 
-//     <option value={selectedVens['names']}>{selectedVens['name']}</option>)
-// };
+function Validations(rowsnum, colsnum)
+{
+    if(isNaN(rowsnum))
+    {
+        alert('Insert a number in the number of rows');
+        return (false);
+    }
+    if(isNaN(colsnum))
+    {
+        alert('Insert a number in the number of seats');
+        return (false);
+    }
+    return (true);
+}
 
 const AddStadium = (props) => {
     const [stadiumName, setStadiumName] = useState('');
@@ -24,18 +24,21 @@ const AddStadium = (props) => {
     
     const handleSubmit = (e) =>{
         e.preventDefault();
-        const stadiumInfo = {
-            name : stadiumName,
-            rowsNumber : rowsNumber,
-            seatsNumberPerRow : seatsNumberPerRow
+        if (Validations(rowsNumber, seatsNumberPerRow))
+        {
+            const stadiumInfo = {
+                name : stadiumName,
+                rowsNumber : rowsNumber,
+                seatsNumberPerRow : seatsNumberPerRow
+            }
+            console.log(stadiumInfo)
+            axios.post( apiURL , stadiumInfo ) //json server
+            .then(response => {
+            console.log(response)
+            }).catch((e) => {
+                alert(e);
+            })
         }
-        console.log(stadiumInfo)
-        axios.post( apiURL , stadiumInfo ) //json server
-        .then(response => {
-        console.log(response)
-        }).catch((e) => {
-            alert(e);
-        })
     }
 
     const refreshPage = ()=>{

@@ -1,13 +1,37 @@
 import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
 
-
-
+function Validations(referee, linesman1, linesman2, teamone, teamtwo)
+{
+    if(isNaN(referee)==false)
+    {
+        alert('referee name can not contain a number');
+        return(false);
+    }
+    if(isNaN(linesman1)==false)
+    {
+        alert('First linesman name can not contain a number');
+        return(false);
+    }
+    if(isNaN(linesman2)==false)
+    {
+        alert('Second linesman name can not contain a number');
+        return(false);
+    }
+    if(teamone === teamtwo)
+    {
+        alert('Same team cannot play against itself');
+        return(false);
+    }
+    return (true);
+}
 
 const EditMatch = (props) => {
     const [team1, setTeam1] = useState('');
     const [team2, setTeam2] = useState('');
-    const [venue, setVenue] = useState('');
+    const [venueName, setVenueName] = useState('');
+    const [rowsNumber, setRowsNumber] = useState('');
+    const [columnsNumber, setColumnsNumber] = useState('');
     const [date, setDate] = useState('');
     const [referee, setReferee] = useState('');
     const [linesman1, setLinesman1] = useState('');
@@ -16,7 +40,7 @@ const EditMatch = (props) => {
     const [selectedVenues, setSelectedVenues] = useState([]);
     const apiURL = 'http://localhost:4000/matches' ;
     
-    const id = props.onIdChange;
+    const id = props.onIdChange; // match id
     console.log(id);
 
     useEffect(() => {
@@ -25,11 +49,11 @@ const EditMatch = (props) => {
         const data = response.data;
         setTeam1(data['teamone']);
         setTeam2(data['teamtwo']);
-        setVenue(data['stadium']);
-        setDate(data['dateee']);
-        setReferee(data['refereeee']);
-        setLinesman1(data['linesmanone']);
-        setLinesman2(data['linesmantwo']);
+        setVenueName(data['stadiumname']);
+        setDate(data['date']);
+        setReferee(data['referee']);
+        setLinesman1(data['linesmen'][0]);
+        setLinesman2(data['linesmen'][1]);
 
         }).catch(() => {
             alert('Error retrieving data');
@@ -47,21 +71,42 @@ const EditMatch = (props) => {
     const handleSubmit = (e) =>{
         e.preventDefault();
 
-        const matchInfo = {
-            teamone : team1,
-            teamtwo : team2,
-            stadium : venue,
-            dateee : date,
-            refereeee : referee,
-            linesmanone : linesman1,
-            linesmantwo : linesman2
+        if(Validations(referee, linesman1, linesman2, team1, team2))
+        {
+            var gfg = new Array(rowsNumber);
+      
+            // Loop to create 2D array using 1D array
+            for (var i = 0; i < rowsNumber; i++) {
+                gfg[i] = new Array(columnsNumber);
+            }
+            for (let i = 0 ; i < rowsNumber; i++)
+            {
+                for (let j = 0 ; j < columnsNumber; j++)
+                {
+                    gfg[i][j] = 0;
+                }
+            }
+            
+            const matchInfo = {
+                teamone : team1,
+                teamtwo : team2,
+                stadiumname : venueName,
+                date : date,
+                referee : referee,
+                linesmen : [
+                    linesman1,
+                    linesman2],
+                seats : gfg
+            }
+            axios.patch( apiURL+"/"+id, matchInfo ) //json server 1 will be changed to id
+            .then(response => {
+            console.log(response)
+            }).catch((e) => {
+                alert(e);
+            })
+            alert('Match is updates successfully');
         }
-        axios.patch( apiURL+"/"+id, matchInfo ) //json server 1 will be changed to id
-        .then(response => {
-        console.log(response)
-        }).catch((e) => {
-            alert(e);
-        })
+        
     }
 
     const refreshPage = ()=>{
@@ -165,13 +210,25 @@ const EditMatch = (props) => {
                         </select>  
     
                         <label htmlFor = "venue">Venue</label>  
-                        <select value = {venue} onChange = {
-                        (e) => setVenue(e.target.value)} id = "venue" name="venue" placeholder={venue}>
-                            <option value="">{venue}</option>
-                            {selectedVenues.map((selectedVenues, index) => 
-                            <option value={selectedVenues['names']} key={index}>{selectedVenues['name']}</option>
+                        <label htmlFor = "venue">Stadium</label> 
+                        <select value = {venueName} onChange = {
+                        (e) => {
+                            setVenueName(e.target.value)
+                            const details = e.target.value;
+                            //setVenueName(details.split(",")[0])
+                            setRowsNumber(details.split(",")[1])
+                            setColumnsNumber(details.split(",")[2])
+                            // console.log(e.target.value.slice(-7))
+                            console.log(e.target.value.split(","))
+                            }} id = "venue" name="venue" required>
+                            <option value="">venueName</option>
+                            {selectedVenues.map((selectedVenue, index) => 
+                            <option key = {index} value={[selectedVenue['name']
+                            , selectedVenue['length'], selectedVenue['width']]
+                            }>{selectedVenue['name']}</option>
+
                             )}
-                        </select>  
+                        </select>
     
                         <label htmlFor = "date">Date and time</label>  
                         <input value = {date} onChange = {

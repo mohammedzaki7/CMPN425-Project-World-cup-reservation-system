@@ -21,6 +21,31 @@ function arrayAlreadyHasArray(arr, subarr){
     return false
 }
 
+function Validations(ccn, pin)
+{
+    if(isNaN(ccn))
+    {
+        alert('Credit card should be a number');
+        return(false);
+    }
+    if(isNaN(pin))
+    {
+        alert('Pin should be a number');
+        return(false);
+    }
+    if(ccn.length!==16)
+    {
+        alert('Credit card number should be 16 digits');
+        return(false);
+    }
+    if(pin.length!==3)
+    {
+        alert('Pin should be 3 digits');
+        return(false);
+    }
+    return (true);
+}
+
 function removeItemOnce(arr, value) {
     var index = arr.indexOf(value);
     if (index > -1) {
@@ -91,8 +116,8 @@ const ReserveSeat = (props) => {
             const data = response.data;
             setTeam1(data['teamone']);
             setTeam2(data['teamtwo']);
-            setStadium(data['stadium']);
-            setDate(data['dateee']);
+            setStadium(data['stadiumname']);
+            setDate(data['date']);
             setSeats(data['seats']);
             setCurrentSeats(data['seats']);
 
@@ -111,40 +136,41 @@ const ReserveSeat = (props) => {
             // }
             // else
             // {
-            const currentDate = new Date();
-            for (let i = 0; i < selectedSeats.length ; i++)
+            if (Validations(creditCardNumber, pin))
             {
-                const reservationInfo = {
-                ccn : creditCardNumber,
-                pin : pin,
-                matchid : matchid,
-                userid : userId,
-                createdAt : currentDate,
-                seat : selectedSeats[i]
+                const currentDate = new Date();
+                for (let i = 0; i < selectedSeats.length ; i++)
+                {
+                    const reservationInfo = {
+                    ccn : creditCardNumber,
+                    pin : pin,
+                    matchid : matchid,
+                    userid : userId,
+                    createdAt : currentDate,
+                    seat : selectedSeats[i]
+                    }
+                    axios.post( apiURL , reservationInfo ) //json server
+                    .then(response => {
+                    console.log(response)
+                    }).catch((e) => {
+                        alert(e);
+                    })
                 }
-                axios.post( apiURL , reservationInfo ) //json server
+                    
+                alert('you reserved ' + count + 'seat/s successfully');
+                const matchInfo = {
+                    seats : currentSeats
+                }
+
+                axios.patch( 'http://localhost:4000/matches/' + matchid, matchInfo ) //json server
                 .then(response => {
                 console.log(response)
                 }).catch((e) => {
                     alert(e);
                 })
-            }
-            
-
-            alert('you reserved ' + count + 'seat/s successfully');
-            const matchInfo = {
-                seats : currentSeats
-            }
-
-            axios.patch( 'http://localhost:4000/matches/' + matchid, matchInfo ) //json server
-            .then(response => {
-            console.log(response)
-            }).catch((e) => {
-                alert(e);
-            })
-            refreshPage();
+                refreshPage();
             // }
-            
+            }
         }
 
     const refreshPage = ()=>{
@@ -179,19 +205,18 @@ const ReserveSeat = (props) => {
                 }
                 else if (currentSeats[row][col] === 1)
                 {
-                    console.log('siuuuu');
                     currentSeats[row][col] = 0;
                     // selectedSeats = removeItemAll(selectedSeats, [row, col])
                     // delete selectedSeats[row][col];
                     for (let rowww = 0; rowww < selectedSeats.length; rowww++)
                     {
-                            console.log(rowww, 'rowww is');
-                            console.log(selectedSeats[rowww][0], 'row is');
-                            console.log(selectedSeats[rowww][1], 'col is');
+                            // console.log(rowww, 'rowww is');
+                            // console.log(selectedSeats[rowww][0], 'row is');
+                            // console.log(selectedSeats[rowww][1], 'col is');
 
                             if (selectedSeats[rowww][0]===row && selectedSeats[rowww][1]===col)
                             {
-                                console.log("jjjjjj");
+                                // console.log("jjjjjj");
                                 selectedSeats.splice(rowww, 1);
                             }
                     }
