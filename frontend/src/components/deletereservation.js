@@ -9,17 +9,11 @@ import moment from 'moment';
 const DeleteReservation = (props) => {
     const [matches, setMatches] = useState([]);
     const [reservations, setReservations] = useState([]);
-
-    // var [selectedSeats, setSelectedSeats] = useState([]);
-
-    // var selectedSeats = [];
-
-    
     
 
 
     const apiURL = 'http://localhost:4000/reservations' ;
-    const id = 1; // user id 
+    const id = props.onUserIdChange; // user id 
 
     Date.prototype.minusDays = function(days) {
         var date = new Date(this.valueOf());

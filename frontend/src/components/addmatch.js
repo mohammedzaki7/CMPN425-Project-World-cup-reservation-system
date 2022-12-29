@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
 
 // const getVenues = () => {
@@ -19,16 +19,21 @@ import axios from 'axios';
 const AddMatch = (props) => {
     const [team1, setTeam1] = useState('');
     const [team2, setTeam2] = useState('');
-    const [venue, setVenue] = useState('');
+    const [venueName, setVenueName] = useState('');
+    const [rowsNumber, setRowsNumber] = useState('');
+    const [columnsNumber, setColumnsNumber] = useState('');
     const [date, setDate] = useState('');
     const [referee, setReferee] = useState('');
     const [linesman1, setLinesman1] = useState('');
     const [linesman2, setLinesman2] = useState('');
     const [selectedVenues, setSelectedVenues] = useState([]);
+
+
     const apiURL = 'http://localhost:4000/matches' ;
 
-    
-    axios.get('http://localhost:4000/venues')
+
+    useEffect(() => {
+        axios.get('http://localhost:4000/venues')
     .then((response) => {
         const data = response.data;
         setSelectedVenues(data);
@@ -36,25 +41,56 @@ const AddMatch = (props) => {
     }).catch(() => {
         alert('Error retrieving data');
     })
+    }, []);
 
+    
+
+    
     const handleSubmit = (e) =>{
+
+        alert(rowsNumber);
+        alert(columnsNumber);
+
+        
+        var gfg = new Array(rowsNumber);
+      
+        // Loop to create 2D array using 1D array
+        for (var i = 0; i < rowsNumber; i++) {
+            gfg[i] = new Array(columnsNumber);
+        }
+
+        for (let i = 0 ; i < rowsNumber; i++)
+        {
+            for (let j = 0 ; j < columnsNumber; j++)
+            {
+                gfg[i][j] = 0;
+            }
+        }
+        let array1 = Array(rowsNumber).fill(0).map(row => new Array(columnsNumber).fill(0))
+        console.log(array1)
         e.preventDefault();
         const matchInfo = {
             teamone : team1,
             teamtwo : team2,
-            stadium : venue,
-            dateee : date,
-            refereeee : referee,
-            linesmanone : linesman1,
-            linesmantwo : linesman2
+            stadiumname : venueName,
+            date : date,
+            referee : referee,
+            linesmen : [
+                linesman1,
+                linesman2
+            ],
+            seats : gfg
         }
         console.log(matchInfo)
         axios.post( apiURL , matchInfo ) //json server
         .then(response => {
         console.log(response)
+        alert('Successfully added a new match');
         }).catch((e) => {
             alert(e);
         })
+        alert('waiting');
+        refreshPage()
     }
 
     const refreshPage = ()=>{
@@ -65,8 +101,10 @@ const AddMatch = (props) => {
     return (
             <div className = "auth-form-container"> 
                 <h2>Add Match</h2>
-                <form className='login-form' onSubmit={handleSubmit}>
-
+                <form className='login-form' onSubmit={(e) => 
+                    {
+                        handleSubmit(e)}
+                    }>
                     <label htmlFor = "team1">Home team</label> 
                     <select value = {team1} onChange = {
                     (e) => setTeam1(e.target.value)} id = "team1" name="team1" required>
@@ -158,11 +196,22 @@ const AddMatch = (props) => {
                     </select> 
 
                     <label htmlFor = "venue">Venue</label> 
-                    <select value = {venue} onChange = {
-                    (e) => setVenue(e.target.value)} id = "venue" name="venue" required>
+                    <select value = {venueName} onChange = {
+                    (e) => {
+                        setVenueName(e.target.value)
+                        const details = e.target.value;
+                        //setVenueName(details.split(",")[0])
+                        setRowsNumber(details.split(",")[1])
+                        setColumnsNumber(details.split(",")[2])
+                        // console.log(e.target.value.slice(-7))
+                        console.log(e.target.value.split(","))
+                        }} id = "venue" name="venue" required>
                         <option value="">-- select one --</option>
-                        {selectedVenues.map((selectedVenues, index) => 
-                        <option key = {index} value={selectedVenues['names']}>{selectedVenues['name']}</option>
+                        {selectedVenues.map((selectedVenue, index) => 
+                        <option key = {index} value={[selectedVenue['name']
+                        , selectedVenue['length'], selectedVenue['width']]
+                        }>{selectedVenue['name']}</option>
+                        
                         )}
                         </select> 
 
@@ -182,7 +231,7 @@ const AddMatch = (props) => {
                     <input value = {linesman2} onChange = {
                         (e) => setLinesman2(e.target.value)} type = "text" id = "linesman2" name = "linesman2" required/> 
         
-                    <button className="loginOrRegister" type = "submit" onClick={refreshPage}>Add Match</button>
+                    <button className="loginOrRegister" type = "submit" >Add Match</button>
         
                 </form>
             </div>

@@ -3,27 +3,13 @@
     {
       "id": 1,
       "name": "Santiago Bernabue",
-      "rowsNumber": "3",
-      "seatsNumberPerRow": "2",
-      "occupiedSeats": [
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          0,
-          1
-        ]
-      ]
+      "length": "8",
+      "width": "12"
     },
     {
-      "name": "bobb",
-      "rowsNumber": "4",
-      "seatsNumberPerRow": "20",
+      "name": "Old trafford",
+      "length": "5",
+      "width": "7",
       "id": 2
     }
   ],
@@ -32,15 +18,22 @@
       "id": "1",
       "teamone": "Brazil",
       "teamtwo": "Urugauy",
-      "stadium": "santiago",
-      "dateee": "2017",
-      "refereeee": "cambellrsfse",
-      "linesmanone": "jakemmm",
-      "linesmantwo": "john",
+      "stadiumname": "santiago",
+      "date": "2017",
+      "referee": "cambellrsfse",
+      "linesmen": [
+        "jakemmm",
+        "john"
+      ],
       "seats": [
         [
           1,
+          1,
+          1
+        ],
+        [
           0,
+          1,
           1
         ],
         [
@@ -49,13 +42,8 @@
           1
         ],
         [
-          1,
-          1,
-          1
-        ],
-        [
           0,
-          0,
+          1,
           1
         ]
       ]
@@ -64,11 +52,13 @@
       "id": "2",
       "teamone": "Switzerland",
       "teamtwo": "Urugauy",
-      "stadium": "Santiago Bernabue",
-      "dateee": "2017",
-      "refereeee": "cambellrdadaa",
-      "linesmanone": "jakeddd",
-      "linesmantwo": "john",
+      "stadiumname": "Santiago Bernabue",
+      "date": "2017",
+      "referee": "cambellrdadaa",
+      "linesmen": [
+        "Molk",
+        "Nord"
+      ],
       "seats": [
         [
           1,
@@ -91,6 +81,103 @@
           1
         ]
       ]
+    },
+    {
+      "teamone": "Brazil",
+      "teamtwo": "Argentina",
+      "stadiumname": "Santiago Bernabue",
+      "date": "2023-01-05",
+      "referee": "kolert",
+      "linesmen": [
+        "mwret",
+        "lendoro"
+      ],
+      "id": "yr1rkVq"
+    },
+    {
+      "teamone": "Portugal",
+      "teamtwo": "Brazil",
+      "stadiumname": "S",
+      "date": "2022-12-08",
+      "referee": "hh",
+      "linesmen": [
+        "da",
+        "g"
+      ],
+      "seats": [
+        [
+          0
+        ]
+      ],
+      "id": "HtJ22Mc"
+    },
+    {
+      "teamone": "Australia",
+      "teamtwo": "Portugal",
+      "stadiumname": "bobb,334,20",
+      "date": "2022-12-22",
+      "referee": "wd",
+      "linesmen": [
+        "lkr",
+        "hg"
+      ],
+      "seats": [
+        [
+          0
+        ]
+      ],
+      "id": "1jadZUF"
+    },
+    {
+      "teamone": "Denmark",
+      "teamtwo": "Australia",
+      "stadiumname": "bobb,334,20",
+      "date": "2022-12-22",
+      "referee": "gg",
+      "linesmen": [
+        "d",
+        "ggg"
+      ],
+      "seats": [
+        [
+          0
+        ]
+      ],
+      "id": "dmYLLk2"
+    },
+    {
+      "teamone": "Ghana",
+      "teamtwo": "Denmark",
+      "stadiumname": "bobb,334,20",
+      "date": "2022-12-28",
+      "referee": "d",
+      "linesmen": [
+        "dd",
+        "g"
+      ],
+      "seats": [
+        [
+          0
+        ]
+      ],
+      "id": "NTnssvh"
+    },
+    {
+      "teamone": "Denmark",
+      "teamtwo": "Belgium",
+      "stadiumname": "bobb,334,20",
+      "date": "2022-12-23",
+      "referee": "da",
+      "linesmen": [
+        "gggg",
+        "a"
+      ],
+      "seats": [
+        [
+          0
+        ]
+      ],
+      "id": "Mu3O0io"
     }
   ],
   "users": [
@@ -104,7 +191,8 @@
       "gender": "male",
       "nationality": "austrian",
       "email": "bob@gmail.com",
-      "role": "manager"
+      "role": "manager",
+      "approved": true
     },
     {
       "username": "bobin",
@@ -116,7 +204,8 @@
       "nationality": "egyptian",
       "email": "mohammad.z.i96@gmail.com",
       "role": "fan",
-      "id": "flP6lt8"
+      "id": "flP6lt8",
+      "approved": true
     }
   ],
   "reservations": [
@@ -258,16 +347,40 @@
       "id": 13
     },
     {
-      "ccn": "78",
-      "pin": "6",
+      "ccn": "4",
+      "pin": "2",
       "matchid": "1",
-      "userid": "flP6lt8",
-      "createdAt": "2022-12-28T15:45:23.264Z",
+      "userid": "1",
+      "createdAt": "2022-12-28T16:21:34.636Z",
       "seat": [
-        1,
-        0
+        3,
+        1
       ],
-      "id": 14
+      "id": 15
+    },
+    {
+      "ccn": "11",
+      "pin": "5",
+      "matchid": "1",
+      "userid": "1",
+      "createdAt": "2022-12-28T16:22:37.828Z",
+      "seat": [
+        0,
+        1
+      ],
+      "id": 16
+    },
+    {
+      "ccn": "11",
+      "pin": "5",
+      "matchid": "1",
+      "userid": "1",
+      "createdAt": "2022-12-24T16:23:14.594Z",
+      "seat": [
+        0,
+        1
+      ],
+      "id": 17
     }
   ]
 }
