@@ -13,6 +13,16 @@ function Validations(rowsnum, colsnum)
         alert('Insert a number in the number of seats');
         return (false);
     }
+    if(rowsnum < 1)
+    {
+        alert('Rows number should be greater than or equal 1');
+        return (false);
+    }
+    if(colsnum < 1)
+    {
+        alert('Columns number should be greater than or equal 1');
+        return (false);
+    }
     return (true);
 }
 

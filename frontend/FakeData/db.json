@@ -17,6 +17,18 @@
       "rowsNumber": "7",
       "seatsNumberPerRow": "5",
       "id": 3
+    },
+    {
+      "name": "bobb",
+      "rowsNumber": "0",
+      "seatsNumberPerRow": "0",
+      "id": 4
+    },
+    {
+      "name": "Stamford Bridge444",
+      "rowsNumber": "2",
+      "seatsNumberPerRow": "5",
+      "id": 5
     }
   ],
   "matches": [
@@ -369,9 +381,9 @@
       "approved": "true"
     },
     {
-      "username": "12",
-      "password": "ggs",
-      "firstname": "da",
+      "username": "eb",
+      "password": "eb",
+      "firstname": "eb",
       "lastname": "gfa",
       "birthdate": "2022-12-02",
       "gender": "male",
