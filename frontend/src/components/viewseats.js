@@ -49,7 +49,7 @@ const ViewSeats = (props) => {
                     for (let i = 0; i < rows * columns; i++) {
                         // rowsArr.push(<option value={i} key ={i}>{i}</option>);
                         if (i % columns === 0) {
-                            seatsArr.push(<br key={i+1000}></br>)
+                            seatsArr.push(<br key={i+100000}></br>)
                         }
 
                         let arr = [];

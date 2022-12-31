@@ -69,7 +69,7 @@ const AdminApprove = (props) => {
                 <div>
                     <button className="remove" onClick={(e) => {
                     remove(e, user['id'])
-                    }}>Remove</button>
+                    }}>Reject</button>
                     <button className="approve" onClick={(e) => {
                     approve(e, user['id'])
                     }}>Approve</button> 

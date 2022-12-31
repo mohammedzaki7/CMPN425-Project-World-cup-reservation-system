@@ -2,7 +2,6 @@ import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import EditMatch from './editmatch';
-import Login from './login';
 
 
 const SelectMatchToEdit = (props) => {
@@ -42,7 +41,7 @@ const SelectMatchToEdit = (props) => {
                     </select>
                     <div>
                     {
-                    matchid ? <EditMatch onIdChange={matchid}/> : <Login></Login>
+                    matchid ? <EditMatch onIdChange={matchid}/> : <div></div>
                     }
                     </div>
                 </div> 

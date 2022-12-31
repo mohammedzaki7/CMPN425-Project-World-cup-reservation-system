@@ -1,3 +1,4 @@
+import { createSearchParams, useNavigate } from "react-router-dom";
 import React, { Component, useState } from 'react';
 import axios from 'axios';
 import SelectMatchToReserve from './selectmatchtoreserve';
@@ -10,18 +11,28 @@ const Login = (props) => {
     const [success, setSuccess] = useState(false);
     const [userId, setUserId] = useState(0);
     const [role, setRole] = useState('');
+    const navigate = useNavigate();
 
     const apiURL = 'http://localhost:4000/users' ;
 
 
     const handleSubmit = async (e) =>{
+        
         e.preventDefault();
-        const response = await axios.get(apiURL
-            , {params: {
-                username : username,
-                password : pass
+
+        const response = await axios.get(apiURL,
+            {
+                params: 
+                {
+                    username : username,
+                    password : pass
                 }
-            })
+            }
+            // headers: { "Content-Type": "application/json" },
+            // withCredentials: true,
+            // }
+            
+            )
             //,JSON.stringify({ username, pass }))
             .then((response) => {
                 const data = response.data;
@@ -33,6 +44,30 @@ const Login = (props) => {
                         setSuccess(true);
                         setUserId(data[0]['id']);
                         setRole(data[0]['role']);
+                        if (data[0]['role'] === 'fan')
+                        {
+                            let path = '/UserHome'; 
+                            navigate({pathname : path
+                                , search : createSearchParams({
+                                userId: data[0]['id']
+                            }).toString()
+                        });
+                            //     , search: createSearchParams({
+                            //     userId: {userId}
+                            // })
+                        // );
+                        }
+                        else if (data[0]['role'] === 'manager')
+                        {
+                            let path = '/ManagerHome'; 
+                            navigate(path);
+                        }
+                        else if (data[0]['role'] === 'administrator')
+                        {
+                            let path = '/AdminHome'; 
+                            navigate(path);
+                        }
+
                     }
                     else
                     {
@@ -55,19 +90,23 @@ const Login = (props) => {
         window.location.reload();
     }
     
+    
+    
     return (
         <>
         {success? 
             (<div>
                 <h1>FIFA WORLD CUP 2022</h1>
-                {role === 'manager' ? <h1>Welcome to the manager page</h1> : <h1>Welcome to the customer page</h1>}
-                <SelectMatchToReserve onUserIdChange={userId}/>
-                <DeleteReservation onUserIdChange={userId}/>
+                {/* {role === 'manager' ? <h1>Welcome to the manager page</h1> 
+                :
+                <h1>Welcome to the customer page</h1>} */}
+                {/* <SelectMatchToReserve onUserIdChange={userId}/>
+                <DeleteReservation onUserIdChange={userId}/> */}
                 </div>
             ) : (
                 <div className = "auth-form-container"> 
-            <h2>Login</h2>
-            <form className='login-form' onSubmit={handleSubmit}>
+                <h2>Login</h2>
+                <form className='login-form' onSubmit={handleSubmit}>
                 <label htmlFor = "username">username</label>
                 <input value = {username} onChange = {
                     (e) => setUsername(e.target.value)} type = "text" id = "username" name = "username" required/>

@@ -31,7 +31,6 @@ const SelectMatchToReserve = (props) => {
 
     return (
         <div>
-            
                 <div>
                     <select value = {matchid} onChange = {
                     (e) => setMatchID(e.target.value)} id = "match" name="match">
@@ -42,7 +41,7 @@ const SelectMatchToReserve = (props) => {
                     </select>
                     <div>
                     {
-                    matchid ? <ReserveSeat  onUserIdChange={userId} onMatchIdChange={matchid}/> : <Login></Login>
+                    matchid ? <ReserveSeat  onUserIdChange={userId} onMatchIdChange={matchid}/> : <div></div>
                     }
                     </div>
                 </div> 

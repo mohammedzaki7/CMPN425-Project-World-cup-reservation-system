@@ -35,7 +35,7 @@ const EditCustomerData = (props) => {
 
     const apiURL = 'http://localhost:4000/users' ;
     
-    const id = 1;
+    const id = props.onUserIdChange;  // user id
     console.log(id);
 
     useEffect(() => {
