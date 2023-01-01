@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-function Validations(firstname, lastname, password, mail)
+function Validations(firstname, lastname)
 {
     if(isNaN(firstname)==false)
     {
@@ -14,11 +14,17 @@ function Validations(firstname, lastname, password, mail)
         alert('Last name can not contain a number');
         return (false);
     }
+    return (true);
+}
+
+function ValidatePassword(password)
+{
     if(password.length < 8)
     {
         alert('Your password is too short');
         return (false);
     }
+
     return (true);
 }
 
@@ -33,49 +39,55 @@ const EditCustomerData = (props) => {
     const [nationality, setNationality] = useState('');
 
 
-    const apiURL = 'http://localhost:3000/user/update' ;
-    
+    const apiURL = 'http://localhost:3000/user/search' ;
+    const apiURLUpdate = 'http://localhost:3000/user/update' ;
+
     const id = props.onUserIdChange;  // user id
     console.log(id);
 
     useEffect(() => {
-        axios.put(apiURL+"/"+id) // 1 will be changed to id
-        .then((response) => {
-        const data = response.data;
+        if(id)
+        {
+            axios.get(apiURL+"/"+id) // 1 will be changed to id
+            .then((response) => {
+            const data = response.data;
 
-        setPass(data['password']);
-        setFirstName(data['firstname']);
-        setLastName(data['lastname']);
-        setBirthDate(data['birthdate']);
-        setGender(data['gender']);
-        setNationality(data['nationality'])
-        setRole(data['role']);
+            setPass(data['password']);
+            setFirstName(data['firstname']);
+            setLastName(data['lastname']);
+            setBirthDate(data['birthdate']);
+            setGender(data['gender']);
+            setNationality(data['nationality'])
+            setRole(data['role']);
+            console.log('siuuu');
 
-
-        }).catch(() => {
-            alert('Error retrieving data');
-        })
+            }).catch(() => {
+                alert('Error retrieving dataaaaaa');
+            })
+        }
+        
         }, []);
 
         const handleSubmit = (e) =>{
             e.preventDefault();
+            // password2.length !==0 ? setPass(password2) : setPass(password);
             
-            if(Validations(firstName, lastName, password2))
+            if(Validations(firstName, lastName) && ValidatePassword(password))
             {
-                password2 ? setPass(password2) : setPass(password2);
+                console.log(password2.length, 'dadad');
                 console.log(password);
                 console.log(password2);
                 
                 var userInfo = {}
-                password2 ? userInfo = {
-                    password : password2,
-                    firstname : firstName,
-                    lastname : lastName,
-                    birthdate : birthDate,
-                    gender : gender,
-                    nationality : nationality,
-                    role : role
-                } : 
+                // password2 ? userInfo = {
+                //     password : password2,
+                //     firstname : firstName,
+                //     lastname : lastName,
+                //     birthdate : birthDate,
+                //     gender : gender,
+                //     nationality : nationality,
+                //     role : role
+                // } : 
                 userInfo = {
                     password : password,
                     firstname : firstName,
@@ -85,7 +97,7 @@ const EditCustomerData = (props) => {
                     nationality : nationality,
                     role : role
                 }
-                axios.patch( apiURL+"/"+id, userInfo ) //json server 1 will be changed to id
+                axios.put( apiURLUpdate+"/"+id, userInfo ) //json server 1 will be changed to id
                 .then(response => {
                 console.log(response)
                 }).catch((e) => {
@@ -107,8 +119,8 @@ const EditCustomerData = (props) => {
 
         <form className='register-form' onSubmit={handleSubmit}>
             <label htmlFor = "password">Password</label>
-            <input value = {password2} onChange = {
-                (e) => setPass2(e.target.value)} type = "password" id = "password" name = "password" />
+            <input value = {password} onChange = {
+                (e) => setPass(e.target.value)} type = "password" id = "password" name = "password" />
                 
             <label htmlFor = "firstName">First name</label>
             <input value = {firstName} onChange = {

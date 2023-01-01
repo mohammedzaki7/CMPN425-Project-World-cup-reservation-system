@@ -28,7 +28,6 @@ const UserHome = (props) => {
     }
 
     const  [userId] = useSearchParams();
-    console.log(userId);
     // this.props.location
     
     return (
