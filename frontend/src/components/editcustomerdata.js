@@ -33,16 +33,20 @@ const EditCustomerData = (props) => {
     // const [password2, setPass2] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [birthDate, setBirthDate] = useState('');
+    const [birthDate, setBirthDate] = useState(Date);
     const [gender, setGender] = useState('');
     const [role, setRole] = useState('');
     const [nationality, setNationality] = useState('');
 
-
+    console.log(birthDate.type);
     const apiURL = 'http://localhost:3000/user/search' ;
+    // const apiURL = 'http://localhost:3000/users' ;
+
     const apiURLUpdate = 'http://localhost:3000/user/update' ;
 
     const id = props.onUserIdChange;  // user id
+    // const id = 1;  // user id
+    
     console.log(id);
 
     useEffect(() => {
@@ -59,7 +63,9 @@ const EditCustomerData = (props) => {
             setGender(data['gender']);
             setNationality(data['nationality'])
             setRole(data['role']);
-            console.log('siuuu');
+            
+            // const birthDate = data['birthdate'];
+            console.log(birthDate);
 
             }).catch(() => {
                 alert('Error retrieving dataaaaaa');
@@ -131,7 +137,8 @@ const EditCustomerData = (props) => {
 
             <label htmlFor = "birthDate">Birthdate</label>
             <input value = {birthDate} onChange = {
-                (e) => setBirthDate(e.target.value)} type = "date" id = "birthDate" name = "birthDate" />
+                (e) => setBirthDate(e.target.value)} type = "text" id = "birthDate" name = "birthDate" placeholder={birthDate}
+                onFocus={(e) => (e.target.type = "date")}/>
 
             <label htmlFor = "gender">Gender</label>
             <input value = {gender} onChange = {
