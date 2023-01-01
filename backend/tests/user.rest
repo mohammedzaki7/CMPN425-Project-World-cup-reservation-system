@@ -42,8 +42,8 @@ POST http://localhost:3000/user/signup
 Content-Type: application/json
 
 {
-    "username": "khaled gamal",
-    "email": "khaled@gmail.com",
+    "username": "khaledsss gamal",
+    "email": "khaled@gmassil.com",
     "password": "khaledddd",
     "firstname": "khaled",
     "lastname": "gamal",

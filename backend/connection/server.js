@@ -7,9 +7,14 @@ app.use(express.json());
 const PORT = 3000;
 const baseRoute = '../routes/'
 var host, port;
+const cors = require('cors');
 
 
 connectDB();
+
+app.use(cors({
+    origin: 'http://localhost:3001'
+}));
 
 
 const server = app.listen(PORT, () => {

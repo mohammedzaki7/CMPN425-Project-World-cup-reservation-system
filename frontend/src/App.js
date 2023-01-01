@@ -29,7 +29,7 @@ function App() {
       <div className='App'>
         <Routes>
         {/* <Route exact path='/' element={< ViewMatch />}></Route>  Home page*/}
-        <Route exact path='/' element={< Login />}></Route>
+        <Route exact path='/' element={currentForm === 'login' ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>}></Route>
         <Route exact path='/UserHome' element={< UserHome />}></Route>
         <Route exact path='/ManagerHome' element={< ManagerHome />}></Route>
         <Route exact path='/AdminHome' element={< AdminApprove />}></Route>
@@ -46,6 +46,7 @@ function App() {
         <Route exact path='/EditMatch' element={< SelectMatchToEdit />}></Route>
         <Route exact path='/ReserveMatch' element={< SelectMatchToReserve />}></Route>
         <Route exact path='/DeleteReservation' element={< DeleteReservation />}></Route>
+        
         
         </Routes>
       </div>

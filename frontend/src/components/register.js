@@ -44,7 +44,7 @@ const Register = (props) => {
     const [nationality, setNationality] = useState('');
     const [email, setEmail] = useState('');
     const [role, setRole] = useState('');
-    const apiURL = 'http://localhost:4000/users' ;
+    const apiURL = 'http://localhost:3000/user/signup' ;
 
 
     const handleSubmit = (e) =>{
@@ -62,7 +62,7 @@ const Register = (props) => {
                 nationality : nationality,
                 email : email,
                 role : role,
-                approved : 'false'
+                approved : false
             }
             axios.post( apiURL , userInfo ) //json server
             .then(response => {

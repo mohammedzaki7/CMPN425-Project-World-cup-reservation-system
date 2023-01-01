@@ -13,32 +13,27 @@ const Login = (props) => {
     const [role, setRole] = useState('');
     const navigate = useNavigate();
 
-    const apiURL = 'http://localhost:4000/users' ;
+    const apiURL = 'http://localhost:3000/user/login' ;
 
 
     const handleSubmit = async (e) =>{
         
         e.preventDefault();
 
-        const response = await axios.get(apiURL,
-            {
-                params: 
-                {
-                    username : username,
-                    password : pass
-                }
-            }
-            // headers: { "Content-Type": "application/json" },
-            // withCredentials: true,
-            // }
-            
+        const response = await axios.post(apiURL,
+                    {
+                        username : username,
+                        password : pass
+                    }            
             )
             //,JSON.stringify({ username, pass }))
             .then((response) => {
                 const data = response.data;
-                console.log(data);
-                if (data.length > 0)
+
+                if (response.status === 200)
                 {
+                    console.log("working");
+                    console.log(data);
                     if(data[0]['approved'])
                     {
                         setSuccess(true);
@@ -77,10 +72,12 @@ const Login = (props) => {
                 }
                 else
                 {
+                    console.log("user");
                     alert('User does not exist');
                     refreshPage();
                 }
                 }).catch(() => {
+                    console.log("error");
                     alert('User does not exist');
                     refreshPage();
                 });

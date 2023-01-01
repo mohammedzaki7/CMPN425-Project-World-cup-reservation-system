@@ -6,7 +6,7 @@ const ViewSeats = (props) => {
 
     
     useEffect(() => {
-        axios.get('http://localhost:4000/matches')
+        axios.get('http://localhost:3000/match/view/seats')
         .then((response) => {
         const data = response.data;
         setMatches(data);
