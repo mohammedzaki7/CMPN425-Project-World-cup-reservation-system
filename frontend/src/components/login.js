@@ -34,30 +34,27 @@ const Login = (props) => {
                 {
                     console.log("working");
                     console.log(data);
-                    if(data[0]['approved'])
+                    if(data['approved'])
                     {
                         setSuccess(true);
-                        setUserId(data[0]['id']);
-                        setRole(data[0]['role']);
-                        if (data[0]['role'] === 'fan')
+                        setUserId(data['_id']);
+                        setRole(data['role']);
+                        if (data['role'] === 'fan')
                         {
+                            console.log(" -------------- ");
                             let path = '/UserHome'; 
                             navigate({pathname : path
                                 , search : createSearchParams({
-                                userId: data[0]['id']
+                                userId: data['_id']
                             }).toString()
                         });
-                            //     , search: createSearchParams({
-                            //     userId: {userId}
-                            // })
-                        // );
                         }
-                        else if (data[0]['role'] === 'manager')
+                        else if (data['role'] === 'manager')
                         {
                             let path = '/ManagerHome'; 
                             navigate(path);
                         }
-                        else if (data[0]['role'] === 'administrator')
+                        else if (data['role'] === 'administrator')
                         {
                             let path = '/AdminHome'; 
                             navigate(path);

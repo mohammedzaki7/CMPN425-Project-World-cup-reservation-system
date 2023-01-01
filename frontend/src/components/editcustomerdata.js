@@ -33,13 +33,13 @@ const EditCustomerData = (props) => {
     const [nationality, setNationality] = useState('');
 
 
-    const apiURL = 'http://localhost:4000/users' ;
+    const apiURL = 'http://localhost:3000/user/update' ;
     
     const id = props.onUserIdChange;  // user id
     console.log(id);
 
     useEffect(() => {
-        axios.get(apiURL+"/"+id) // 1 will be changed to id
+        axios.put(apiURL+"/"+id) // 1 will be changed to id
         .then((response) => {
         const data = response.data;
 

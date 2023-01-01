@@ -15,7 +15,7 @@ const UserHome = (props) => {
     // const [userId, setUserId] = useState(0);
     const [role, setRole] = useState('');
 
-    const apiURL = 'http://localhost:4000/users' ;
+    const apiURL = 'http://localhost:3000/user/search/' ;
     // const [searchParams] = useSearchParams();
     // const userId = props.onUserIdChange;  // user id
     
@@ -37,8 +37,8 @@ const UserHome = (props) => {
                 console.log(userId.get('userId'))
             }
             <h1>FIFA WORLD CUP 2022</h1>
-            <SelectMatchToReserve onUserIdChange={userId.get('userId')}/>
-            <DeleteReservation onUserIdChange={userId.get('userId')}/>
+            {/* <SelectMatchToReserve onUserIdChange={userId.get('userId')}/>
+            <DeleteReservation onUserIdChange={userId.get('userId')}/> */}
             <EditCustomerData onUserIdChange={userId.get('userId')}/>
             <ViewSeats/>
             <ViewMatch/>
