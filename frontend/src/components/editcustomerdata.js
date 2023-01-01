@@ -30,7 +30,7 @@ function ValidatePassword(password)
 
 const EditCustomerData = (props) => {
     const [password, setPass] = useState('');
-    const [password2, setPass2] = useState('');
+    // const [password2, setPass2] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [birthDate, setBirthDate] = useState('');
@@ -74,9 +74,8 @@ const EditCustomerData = (props) => {
             
             if(Validations(firstName, lastName) && ValidatePassword(password))
             {
-                console.log(password2.length, 'dadad');
+                // console.log(password2.length, 'dadad');
                 console.log(password);
-                console.log(password2);
                 
                 var userInfo = {}
                 // password2 ? userInfo = {
