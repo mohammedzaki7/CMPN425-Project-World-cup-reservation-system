@@ -32,8 +32,13 @@ exports.createMatch = async (req, res) => {
             res.status(400).send({ message: "There is already a match for " + req.body.teamone + " in this date!" });
             return;
         }
-        if ((matches[i].teamone == req.body.teamtwo || matches[i].teamtwo == req.body.teamtwo) && day == matchDay && month == matchMonth && year == matchYear) {
+        else if ((matches[i].teamone == req.body.teamtwo || matches[i].teamtwo == req.body.teamtwo) && day == matchDay && month == matchMonth && year == matchYear) {
             res.status(400).send({ message: "There is already a match for " + req.body.teamtwo + " in this date!" });
+            return;
+        }
+        // check if the stadium is available in the given date
+        else if (matches[i].stadiumname == req.body.stadiumname && day == matchDay && month == matchMonth && year == matchYear) {
+            res.status(400).send({ message: "The stadium is not available in this date!" });
             return;
         }
     }
