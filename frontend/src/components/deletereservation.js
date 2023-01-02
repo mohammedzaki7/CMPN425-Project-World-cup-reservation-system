@@ -12,7 +12,7 @@ const DeleteReservation = (props) => {
     
 
 
-    const apiURL = 'http://localhost:4000/reservations' ;
+    const apiURL = 'http://localhost:3000/reservation/delete' ; // should be all reservations 
     const id = props.onUserIdChange; // user id 
 
     Date.prototype.minusDays = function(days) {
@@ -34,7 +34,7 @@ const DeleteReservation = (props) => {
             alert('Error retrieving data');
         })
 
-        axios.get('http://localhost:4000/matches')
+        axios.get('http://localhost:3000/match/view/seats')
         .then((response) => {
             const data = response.data;
             setMatches(data);
@@ -66,7 +66,7 @@ const DeleteReservation = (props) => {
 
                 for (let i = 0; i < matches.length; i++)
                 {
-                    if (matches[i]['id'] === matchid)
+                    if (matches[i]['_id'] === matchid)
                     {
                         var oldSeats = matches[i]['seats'];
                         console.log(oldSeats);
@@ -78,7 +78,7 @@ const DeleteReservation = (props) => {
                             seats : oldSeats
                         }
 
-                        axios.patch( 'http://localhost:4000/matches/' + matchid, matchInfo ) //json server
+                        axios.put( 'http://localhost:3000/match/update/' + matchid, matchInfo ) //json server
                         .then(response => {
                             console.log(response)
                         }).catch((e) => {
@@ -116,7 +116,7 @@ const DeleteReservation = (props) => {
                         <h3 className="title">{reservation['teamone']} VS {reservation['teamtwo']}</h3>
                         <small>Seat is in row number: {reservation['seat'][0]} and column number: {reservation['seat'][1]}</small>
                         <br></br><button className="loginOrRegister" onClick={(e) => {
-                        handleSubmit(e, reservation['seat'], reservation['id'], reservation['matchid'], reservation['createdAt'])
+                        handleSubmit(e, reservation['seat'], reservation['_id'], reservation['matchid'], reservation['createdAt'])
                         }}>Cancel reservation</button>
                     </div>
                 }

@@ -2,6 +2,8 @@ import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Login from './login';
+import moment from 'moment';
+import { format } from 'date-fns'
 
 function arrayAlreadyHasArray(arr, subarr){
     for(var i = 0; i<arr.length; i++){
@@ -107,11 +109,11 @@ const ReserveSeat = (props) => {
 
     const matchid = props.onMatchIdChange;  // match id
     const userId = props.onUserIdChange;  // user id
-    const apiURL = 'http://localhost:4000/reservations' ;
-    // console.log(id);
+    const apiURL = 'http://localhost:3000/reservation/create' ;
+    console.log(matchid);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/matches/'+matchid)
+        axios.get('http://localhost:3000/match/search/'+matchid)
         .then((response) => {
             const data = response.data;
             setTeam1(data['teamone']);
@@ -124,7 +126,7 @@ const ReserveSeat = (props) => {
             // console.log(seats);
 
         }).catch(() => {
-            alert('Error retrieving data');
+            alert('Error retrieving data :((');
         })
         }, [matchid]);
 
@@ -139,16 +141,19 @@ const ReserveSeat = (props) => {
             if (Validations(creditCardNumber, pin))
             {
                 const currentDate = new Date();
+                // const currentDateFormated = moment(currentDate, 'YYYY-MM-DDTHH:mm:ss.SSSZ');
                 for (let i = 0; i < selectedSeats.length ; i++)
                 {
                     const reservationInfo = {
-                    ccn : creditCardNumber,
-                    pin : pin,
-                    matchid : matchid,
-                    userid : userId,
-                    createdAt : currentDate,
-                    seat : selectedSeats[i]
+                        ccn : creditCardNumber,
+                        pin : pin,
+                        matchid : matchid,
+                        userid : userId,
+                        // createdAt : format(new Date(), 'yyyy-mm-dd'),
+                        createdAt : '2023-01-02T01:03:30.256+00:00',
+                        seat : selectedSeats[i]
                     }
+                    console.log(reservationInfo);
                     axios.post( apiURL , reservationInfo ) //json server
                     .then(response => {
                     console.log(response)
@@ -162,7 +167,7 @@ const ReserveSeat = (props) => {
                     seats : currentSeats
                 }
 
-                axios.patch( 'http://localhost:4000/matches/' + matchid, matchInfo ) //json server
+                axios.put( 'http://localhost:3000/match/update/' + matchid, matchInfo ) //json server
                 .then(response => {
                 console.log(response)
                 }).catch((e) => {
@@ -195,17 +200,17 @@ const ReserveSeat = (props) => {
                 // console.log(row);
                 // console.log(col);
                 // console.log(currentSeats[row][col], 'value is');
-                if (currentSeats[row][col] === 0)
+                if (currentSeats[row][col] === false)
                 {
-                    currentSeats[row][col] = 1;
+                    currentSeats[row][col] = true;
                     selectedSeats.push([row, col]);
                     setCount(count + 1);
                     console.log(count);
 
                 }
-                else if (currentSeats[row][col] === 1)
+                else if (currentSeats[row][col] === true)
                 {
-                    currentSeats[row][col] = 0;
+                    currentSeats[row][col] = false;
                     // selectedSeats = removeItemAll(selectedSeats, [row, col])
                     // delete selectedSeats[row][col];
                     for (let rowww = 0; rowww < selectedSeats.length; rowww++)
@@ -275,7 +280,7 @@ const ReserveSeat = (props) => {
                         arr[1] = col;
                         // console.log(arr, 'arr is');
                         console.log(selectedSeats, 'selected seats');
-                        if(seats[row][col] === 1 && arrayAlreadyHasArray(selectedSeats, arr) == false)
+                        if(seats[row][col] === true && arrayAlreadyHasArray(selectedSeats, arr) == false)
                         { seatsArr.push(<div className="seat occupied" value={i} key={i}>&nbsp;&nbsp;&nbsp;&nbsp;</div>); }
                         else
                         { seatsArr.push(<div className="seat canreserve" value={i} key={i} onClick={(e) => {handleClick(e, i)}} >&nbsp;&nbsp;&nbsp;&nbsp;</div>); }

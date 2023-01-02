@@ -36,8 +36,8 @@ const UserHome = (props) => {
                 console.log(userId.get('userId'))
             }
             <h1>FIFA WORLD CUP 2022</h1>
-            {/* <SelectMatchToReserve onUserIdChange={userId.get('userId')}/>
-            <DeleteReservation onUserIdChange={userId.get('userId')}/> */}
+            <SelectMatchToReserve onUserIdChange={userId.get('userId')}/>
+            <DeleteReservation onUserIdChange={userId.get('userId')}/>
             <EditCustomerData onUserIdChange={userId.get('userId')}/>
             <ViewSeats/>
             <ViewMatch/>
