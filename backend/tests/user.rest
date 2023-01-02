@@ -13,11 +13,11 @@ GET http://localhost:3000/user/search/63a615a581fc61eb0661324c
 GET http://localhost:3000/user/approval/0
 
 ###
-DELETE  http://localhost:3000/user/delete/63a610c10c0d330718b6eaa8
+DELETE  http://localhost:3000/user/delete/63b23b333720265be20e734e
 
 ###
 
-PUT  http://localhost:3000/user/update/63a6e4477050a4b115874a84
+PUT  http://localhost:3000/user/update/63b23b333720265be20e734e
 Content-Type: application/json
 
 {

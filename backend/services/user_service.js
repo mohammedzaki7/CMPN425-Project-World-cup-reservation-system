@@ -132,11 +132,9 @@ exports.findUserByID = (req, res ) => {
 //@access: public
 //@status code: 200 - 400 - error empty request, success, 404 - not found, 405 - email already exists
 exports.updateUser = async (req, res) => {
-    if (!req.body) {
-        res.status(400).send({ message: "Content can not be empty!" });
-    }
     // check if the user is Admin, can't update admin
-    if (req.body.role == 'administrator') {
+    const user = await User.findById(req.params.id);
+    if (user.role == 'administrator') {
         res.status(405);
         return res.json({ message: "Cannot update admin!" });
     }
@@ -175,24 +173,26 @@ exports.updateUser = async (req, res) => {
 //@desc: delete a manager by id
 //@access: public
 //@status code: 200 - success, 404 - not found
-exports.deleteUser = (req, res) => {
-    if (req.body.role == 'administrator') {
-        res.status(405);
-        return res.json({ message: "Cannot delete admin!" });
-    }
-    else{
-        User.findByIdAndDelete(req.params.id).then((result) => {
-            if (result == null) {
-                res.status(404).send({ message: "User not found." });
-                return;
-            }
-            else{
-                res.send({ message: "User was deleted successfully." });
-            }
-        }).catch((err) => {
-            res.status(404).send({ message: err.message || "Some error occurred while deleting manager." });
-        });
-    }
+exports.deleteUser = async (req, res) => {
+    // check if the user is Admin, can't delete admin
+        const user = await User.findById(req.params.id);
+        if (user.role == 'administrator') {
+            res.status(405);
+            return res.json({ message: "Cannot delete admin!" });
+        }
+        else{
+            User.findByIdAndDelete(req.params.id).then((result) => {
+                if (result == null) {
+                    res.status(404).send({ message: "User not found." });
+                    return;
+                }
+                else{
+                    res.send({ message: "User was deleted successfully." });
+                }
+            }).catch((err) => {
+                res.status(404).send({ message: err.message || "Some error occurred while deleting manager." });
+            });
+        }
 }
 
 
