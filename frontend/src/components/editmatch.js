@@ -227,23 +227,22 @@ const EditMatch = (props) => {
                         <label htmlFor = "venue">Stadium</label> 
                         <select value = {venueName} onChange = {
                         (e) => {
-                            setVenueName(e.target.value)
+                            setVenueName(e.target.value);
                             const details = e.target.value;
-                            setVenueName(details.split(",")[0])
-                            setRowsNumber(details.split(",")[1])
-                            setColumnsNumber(details.split(",")[2])
-                            // console.log(e.target.value.slice(-7))
-                            console.log(e.target.value.split(",")[0])
+                            setVenueName(details.split(",")[0]);
+                            setRowsNumber(details.split(",")[1]);
+                            setColumnsNumber(details.split(",")[2]);
+                            // console.log(e.target.value.slice(-7));
+                            console.log(e.target.value.split(",")[0]);
+                            console.log(venueName);
                             }} id = "venue" name="venue" required>
                             <option value="">{venueName}</option>
                             {selectedVenues.map((selectedVenue, index) => 
                             <option key = {index} value={[selectedVenue['name']
                             , selectedVenue['length'], selectedVenue['width']]
                             }>{selectedVenue['name']}</option>
-
                             )}
                         </select>
-    
                         <label htmlFor = "date">Date and time</label>  
                         <input value = {date} onChange = {
                             (e) => setDate(e.target.value)} type = "text" id = "date" name = "date" placeholder={date}
