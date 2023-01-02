@@ -141,7 +141,8 @@ const ReserveSeat = (props) => {
             if (Validations(creditCardNumber, pin))
             {
                 const currentDate = new Date();
-                // const currentDateFormated = moment(currentDate, 'YYYY-MM-DDTHH:mm:ss.SSSZ');
+                const currentDateFormated = moment(currentDate).format("YYYY-MM-DD")
+                    // , 'YYYY-MM-DDTHH:mm:ss.SSSZ');
                 for (let i = 0; i < selectedSeats.length ; i++)
                 {
                     const reservationInfo = {
@@ -150,7 +151,7 @@ const ReserveSeat = (props) => {
                         matchid : matchid,
                         userid : userId,
                         // createdAt : format(new Date(), 'yyyy-mm-dd'),
-                        createdAt : '2023-01-02T01:03:30.256+00:00',
+                        // createdAt : '2023-01-02T01:03:30.256+00:00',
                         seat : selectedSeats[i]
                     }
                     console.log(reservationInfo);

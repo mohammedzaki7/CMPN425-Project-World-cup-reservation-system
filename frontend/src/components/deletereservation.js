@@ -12,7 +12,7 @@ const DeleteReservation = (props) => {
     
 
 
-    const apiURL = 'http://localhost:3000/reservation/delete' ; // should be all reservations 
+    const apiURL = 'http://localhost:3000/reservation/user/' ; // should be all reservations 
     const id = props.onUserIdChange; // user id 
 
     Date.prototype.minusDays = function(days) {
@@ -25,7 +25,7 @@ const DeleteReservation = (props) => {
     // console.log(id);
 
     useEffect(() => {
-        axios.get(apiURL)
+        axios.get(apiURL + id)
         .then((response) => {
             const data = response.data;
             setReservations(data);
