@@ -38,7 +38,8 @@ const EditMatch = (props) => {
     const [linesman2, setLinesman2] = useState('');
 
     const [selectedVenues, setSelectedVenues] = useState([]);
-    const apiURL = 'http://localhost:4000/matches' ;
+    const apiURL = 'http://localhost:3000/match/search' ;
+    const apiURLUpdate = 'http://localhost:3000/match/update' ;
     
     const id = props.onIdChange; // match id
     console.log(id);
@@ -58,7 +59,7 @@ const EditMatch = (props) => {
         }).catch(() => {
             alert('Error retrieving data');
         })
-        axios.get('http://localhost:4000/venues')
+        axios.get('http://localhost:3000/stadium/view')
         .then((response) => {
         const venues_data = response.data;
         setSelectedVenues(venues_data);
@@ -98,9 +99,10 @@ const EditMatch = (props) => {
                     linesman2],
                 seats : gfg
             }
-            axios.patch( apiURL+"/"+id, matchInfo ) //json server 1 will be changed to id
+            axios.patch( apiURLUpdate+"/"+id, matchInfo ) //json server 1 will be changed to id
             .then(response => {
             console.log(response)
+            refreshPage();
             }).catch((e) => {
                 alert(e);
             })
@@ -247,7 +249,7 @@ const EditMatch = (props) => {
                         <input value = {linesman2} onChange = {
                             (e) => setLinesman2(e.target.value)} type = "text" id = "linesman2" name = "linesman2" placeholder={linesman2}/>  
             
-                        <button className="loginOrRegister" type = "submit" onClick={refreshPage}>Edit Match</button>
+                        <button className="loginOrRegister" type = "submit" >Edit Match</button>
                     </form>
                     </div>
                 

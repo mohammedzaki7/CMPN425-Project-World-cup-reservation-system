@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const AdminApprove = (props) => {
     const [users, setUsers] = useState([]);
 
-    const apiURL = 'http://localhost:4000/users' ;
+    const apiURL = 'http://localhost:3000/users' ;
 
     useEffect(() => {
         axios.get(apiURL)
