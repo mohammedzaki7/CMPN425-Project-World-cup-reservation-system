@@ -111,6 +111,7 @@ const ReserveSeat = (props) => {
     const userId = props.onUserIdChange;  // user id
     const apiURL = 'http://localhost:3000/reservation/create' ;
     console.log(matchid);
+    console.log(userId);
 
     useEffect(() => {
         axios.get('http://localhost:3000/match/search/'+matchid)
@@ -132,7 +133,7 @@ const ReserveSeat = (props) => {
 
         const handleSubmit = (e) =>{
             e.preventDefault();
-
+            console.log(userId, 'lada');
             // if(count < 1){
             //     alert('Please select a seat');
             // }
@@ -146,14 +147,12 @@ const ReserveSeat = (props) => {
                 for (let i = 0; i < selectedSeats.length ; i++)
                 {
                     const reservationInfo = {
-                        ccn : creditCardNumber,
-                        pin : pin,
-                        matchid : matchid,
-                        userid : userId,
-                        // createdAt : format(new Date(), 'yyyy-mm-dd'),
-                        // createdAt : '2023-01-02T01:03:30.256+00:00',
+                        userid: userId,
+                        matchid: matchid,
+                        cnn: creditCardNumber,
+                        pin: pin,
                         seat : selectedSeats[i]
-                    }
+                    }
                     console.log(reservationInfo);
                     axios.post( apiURL , reservationInfo ) //json server
                     .then(response => {

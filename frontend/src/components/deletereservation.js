@@ -13,6 +13,8 @@ const DeleteReservation = (props) => {
 
 
     const apiURL = 'http://localhost:3000/reservation/user/' ; // should be all reservations 
+    const apiURLDelete = 'http://localhost:3000/reservation/delete' ; // should be all reservations 
+    
     const id = props.onUserIdChange; // user id 
 
     Date.prototype.minusDays = function(days) {
@@ -29,6 +31,7 @@ const DeleteReservation = (props) => {
         .then((response) => {
             const data = response.data;
             setReservations(data);
+            console.log(data);
 
         }).catch(() => {
             alert('Error retrieving data');
@@ -38,7 +41,6 @@ const DeleteReservation = (props) => {
         .then((response) => {
             const data = response.data;
             setMatches(data);
-
         }).catch(() => {
             alert('Error retrieving data');
         })
@@ -57,7 +59,7 @@ const DeleteReservation = (props) => {
             
             if(formatedCurrentDate.isAfter(reservedCurrentDate) )
             {
-                axios.delete( apiURL + '/' + reservationId) //json server
+                axios.delete( apiURLDelete + '/' + reservationId) //json server
                 .then(response => {
                 console.log(response)
                 }).catch((e) => {
@@ -109,9 +111,10 @@ const DeleteReservation = (props) => {
         <div>
             <h2 className="deleteSeatTitle">Your reservations</h2>
             {reservations.map((reservation, index) =>
-                {
-                    if (reservation['userid'] == id)
-                    return 
+            
+                // {
+                //     if (reservation[0]['userid'] == id)
+                //     return 
                     <div className="stadiums" key={index}>
                         <h3 className="title">{reservation['teamone']} VS {reservation['teamtwo']}</h3>
                         <small>Seat is in row number: {reservation['seat'][0]} and column number: {reservation['seat'][1]}</small>
@@ -119,7 +122,7 @@ const DeleteReservation = (props) => {
                         handleSubmit(e, reservation['seat'], reservation['_id'], reservation['matchid'], reservation['createdAt'])
                         }}>Cancel reservation</button>
                     </div>
-                }
+                //}
                 )}
 
             
