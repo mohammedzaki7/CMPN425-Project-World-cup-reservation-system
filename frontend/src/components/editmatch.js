@@ -38,7 +38,9 @@ const EditMatch = (props) => {
     const [linesman2, setLinesman2] = useState('');
 
     const [selectedVenues, setSelectedVenues] = useState([]);
-    const apiURL = 'http://localhost:4000/matches' ;
+    
+    const apiURL = 'http://localhost:3000/match/search' ; 
+    const apiURLUpdate = 'http://localhost:3000/match/update' ; 
     
     const id = props.onIdChange; // match id
     console.log(id);
@@ -58,7 +60,7 @@ const EditMatch = (props) => {
         }).catch(() => {
             alert('Error retrieving data');
         })
-        axios.get('http://localhost:4000/venues')
+        axios.get('http://localhost:3000/stadium/view')
         .then((response) => {
         const venues_data = response.data;
         setSelectedVenues(venues_data);
@@ -87,6 +89,17 @@ const EditMatch = (props) => {
                 }
             }
             
+            // const matchInfo = {
+            //     teamone : team1,
+            //     teamtwo : team2,
+            //     stadiumname : venueName.split(",")[0],
+            //     date : date,
+            //     referee : referee,
+            //     linesmen : [
+            //         linesman1,
+            //         linesman2],
+            //     seats : gfg
+            // }
             const matchInfo = {
                 teamone : team1,
                 teamtwo : team2,
@@ -95,12 +108,14 @@ const EditMatch = (props) => {
                 referee : referee,
                 linesmen : [
                     linesman1,
-                    linesman2],
+                    linesman2
+                ],
                 seats : gfg
             }
-            axios.patch( apiURL+"/"+id, matchInfo ) //json server 1 will be changed to id
+            axios.put( apiURL+"/"+id, matchInfo ) //json server 1 will be changed to id
             .then(response => {
             console.log(response)
+            refreshPage();
             }).catch((e) => {
                 alert(e);
             })
@@ -209,19 +224,18 @@ const EditMatch = (props) => {
                         <option value="Whales">Whales</option>
                         </select>  
     
-                        <label htmlFor = "venue">Venue</label>  
                         <label htmlFor = "venue">Stadium</label> 
                         <select value = {venueName} onChange = {
                         (e) => {
                             setVenueName(e.target.value)
                             const details = e.target.value;
-                            //setVenueName(details.split(",")[0])
+                            setVenueName(details.split(",")[0])
                             setRowsNumber(details.split(",")[1])
                             setColumnsNumber(details.split(",")[2])
                             // console.log(e.target.value.slice(-7))
-                            console.log(e.target.value.split(","))
+                            console.log(e.target.value.split(",")[0])
                             }} id = "venue" name="venue" required>
-                            <option value="">venueName</option>
+                            <option value="">{venueName}</option>
                             {selectedVenues.map((selectedVenue, index) => 
                             <option key = {index} value={[selectedVenue['name']
                             , selectedVenue['length'], selectedVenue['width']]
@@ -247,7 +261,7 @@ const EditMatch = (props) => {
                         <input value = {linesman2} onChange = {
                             (e) => setLinesman2(e.target.value)} type = "text" id = "linesman2" name = "linesman2" placeholder={linesman2}/>  
             
-                        <button className="loginOrRegister" type = "submit" onClick={refreshPage}>Edit Match</button>
+                        <button className="loginOrRegister" type = "submit" >Edit Match</button>
                     </form>
                     </div>
                 

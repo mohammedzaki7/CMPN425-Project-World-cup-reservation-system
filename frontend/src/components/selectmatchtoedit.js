@@ -9,7 +9,7 @@ const SelectMatchToEdit = (props) => {
     const [selectedMatches, setSelectedMatches] = useState([]);
     const [matchid, setMatchID] = useState('');
 
-    const apiURL = 'http://localhost:4000/matches' ;
+    const apiURL = 'http://localhost:3000/match/view/noseats' ;
 
     useEffect(() => {
         axios.get(apiURL) 
@@ -36,7 +36,7 @@ const SelectMatchToEdit = (props) => {
                     (e) => setMatchID(e.target.value)} id = "match" name="match">
                         <option value="">Select match</option>
                         {selectedMatches.map((match, index) => 
-                        <option value={match['id']} key={index}>{match['teamone']} VS {match['teamtwo']}</option>
+                        <option value={match['_id']} key={index}>{match['teamone']} VS {match['teamtwo']}</option>
                         )}
                     </select>
                     <div>

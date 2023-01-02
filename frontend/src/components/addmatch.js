@@ -32,7 +32,7 @@ const AddMatch = (props) => {
     const [venueName, setVenueName] = useState('');
     const [rowsNumber, setRowsNumber] = useState(0);
     const [columnsNumber, setColumnsNumber] = useState(0);
-    const [date, setDate] = useState(Date);
+    const [date, setDate] = useState('');
     const [referee, setReferee] = useState('');
     const [linesman1, setLinesman1] = useState('');
     const [linesman2, setLinesman2] = useState('');
@@ -77,8 +77,8 @@ const AddMatch = (props) => {
             const matchInfo = {
                 teamone : team1,
                 teamtwo : team2,
-                stadiumname : venueName,
-                date : Date.parse(date),
+                stadiumname : venueName.split(",")[0],
+                date : date,
                 referee : referee,
                 linesmen : [
                     linesman1,

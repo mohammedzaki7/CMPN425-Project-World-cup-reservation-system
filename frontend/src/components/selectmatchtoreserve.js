@@ -9,7 +9,7 @@ const SelectMatchToReserve = (props) => {
 
     const [selectedMatches, setSelectedMatches] = useState([]);
     const [matchid, setMatchID] = useState('');
-    const apiURL = 'http://localhost:4000/matches' ;
+    const apiURL = 'http://localhost:3000/match/view/noseats' ;
 
     const userId = props.onUserIdChange;  // user id
     console.log(userId);
