@@ -70,6 +70,15 @@ exports.loginUser = (req, res) => {
 }
 
 
+exports.getAllCustomers = (req, res) => {
+    User.find({ role: 'fan' }).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.status(500).send({ message: err.message || "Some error occurred while retrieving fans." });
+    });
+}
+
+
 //@method: GET
 //@desc: find all managers given approval status
 //@access: public
@@ -126,32 +135,39 @@ exports.updateUser = async (req, res) => {
     if (!req.body) {
         res.status(400).send({ message: "Content can not be empty!" });
     }
-    //check if email is in the params
-    if (req.body.username) {
-        const isNewUsername = await User.userNameInUse(req.body.username, req.params.id);
-        if (!isNewUsername) {
-            res.status(405);
-            return res.json({ message: "Chosen username already exists in the database!" });
-        }
-    } 
-
-    //cannot change role from manager to fan or vice versa
-    if (req.body.role) {
+    // check if the user is Admin, can't update admin
+    if (req.body.role == 'administrator') {
         res.status(405);
-        return res.json({ message: "Cannot change role!" });
+        return res.json({ message: "Cannot update admin!" });
     }
+    //check if email is in the params
+    else {
+            if (req.body.username) {
+            const isNewUsername = await User.userNameInUse(req.body.username, req.params.id);
+            if (!isNewUsername) {
+                res.status(405);
+                return res.json({ message: "Chosen username already exists in the database!" });
+            }
+        } 
 
-    User.findByIdAndUpdate(req.params.id, req.body , { useFindAndModify: false }).then((result) => {
-        if (result == null) {
-            res.status(404).send({ message: "User not found." });
-            return;
+        //cannot change role from manager to fan or vice versa
+        if (req.body.role) {
+            res.status(405);
+            return res.json({ message: "Cannot change role!" });
         }
-        else{
-            res.send({ message: "User was updated successfully." });
-        }
-    }).catch((err) => {
-        res.status(404).send({ message: err.message || "Some error occurred while updating manager." });
-    });
+
+        User.findByIdAndUpdate(req.params.id, req.body , { useFindAndModify: false }).then((result) => {
+            if (result == null) {
+                res.status(404).send({ message: "User not found." });
+                return;
+            }
+            else{
+                res.send({ message: "User was updated successfully." });
+            }
+        }).catch((err) => {
+            res.status(404).send({ message: err.message || "Some error occurred while updating manager." });
+        });
+    }
 }
 
 
@@ -160,17 +176,23 @@ exports.updateUser = async (req, res) => {
 //@access: public
 //@status code: 200 - success, 404 - not found
 exports.deleteUser = (req, res) => {
-    User.findByIdAndDelete(req.params.id).then((result) => {
-        if (result == null) {
-            res.status(404).send({ message: "User not found." });
-            return;
-        }
-        else{
-            res.send({ message: "User was deleted successfully." });
-        }
-    }).catch((err) => {
-        res.status(404).send({ message: err.message || "Some error occurred while deleting manager." });
-    });
+    if (req.body.role == 'administrator') {
+        res.status(405);
+        return res.json({ message: "Cannot delete admin!" });
+    }
+    else{
+        User.findByIdAndDelete(req.params.id).then((result) => {
+            if (result == null) {
+                res.status(404).send({ message: "User not found." });
+                return;
+            }
+            else{
+                res.send({ message: "User was deleted successfully." });
+            }
+        }).catch((err) => {
+            res.status(404).send({ message: err.message || "Some error occurred while deleting manager." });
+        });
+    }
 }
 
 
@@ -179,7 +201,8 @@ exports.deleteUser = (req, res) => {
 //@access: public
 //@status code: 200 - success, 500 - server error
 exports.findAllUserByApproval = (req, res) => {
-    User.find({ approved: req.params.approved }).then((result) => {
+    // where role is manager or fan and with the given approval status
+    User.find({ $or: [{ role: 'manager' }, { role: 'fan' }], approved: req.params.approved }).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while retrieving managers." });

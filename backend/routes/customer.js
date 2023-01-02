@@ -11,6 +11,7 @@ route.get('/', home_service.home);
 // User routes
 route.post('/user/signup', user_service.signupUser);                            // intergrated
 route.post('/user/login', user_service.loginUser);                              // intergrated
+route.get('/user/view', user_service.getAllCustomers);                              // intergrated
 route.get('/user/manager/:approved', user_service.findAllManager);             
 route.get('/user/customer/:approved', user_service.findAllCustomer);
 route.get('/user/approval/:approved', user_service.findAllUserByApproval);

@@ -12,7 +12,7 @@ exports.createReservation = async (req, res) => {
         res.status(400).send({ message: "Content can not be empty!" });
         return;
     }
-    if (!req.body.matchid || !req.body.userid || !req.body.seat)  {
+    if (!req.body.matchid || !req.body.userid || !req.body.seat || !req.body.cnn || !req.body.pin)  {
         res.status(400).send({ message: "Please fill all the required fields!" });
         return;
     }
