@@ -15,6 +15,30 @@ exports.createMatch = async (req, res) => {
         res.status(400).send({ message: "Please fill all the required fields!" });
         return;
     }
+    //get all matches
+    // cast date of matches to day month year only
+    // if there is a match  for one of the given team names in the same day month year, return error
+    const matches = await Match.find();
+    const date = new Date(req.body.date);
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    for (let i = 0; i < matches.length; i++) {
+        const matchDate = new Date(matches[i].date);
+        const matchDay = matchDate.getDate();
+        const matchMonth = matchDate.getMonth();
+        const matchYear = matchDate.getFullYear();
+        if ((matches[i].teamone == req.body.teamone || matches[i].teamtwo == req.body.teamone) && day == matchDay && month == matchMonth && year == matchYear) {
+            res.status(400).send({ message: "There is already a match for " + req.body.teamone + " in this date!" });
+            return;
+        }
+        if ((matches[i].teamone == req.body.teamtwo || matches[i].teamtwo == req.body.teamtwo) && day == matchDay && month == matchMonth && year == matchYear) {
+            res.status(400).send({ message: "There is already a match for " + req.body.teamtwo + " in this date!" });
+            return;
+        }
+    }
+    
+    
     if (req.body.linesmen.length != 2) {
         res.status(400).send({ message: "Please fill two linesmen!" });
         return;
