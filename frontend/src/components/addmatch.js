@@ -30,24 +30,24 @@ const AddMatch = (props) => {
     const [team1, setTeam1] = useState('');
     const [team2, setTeam2] = useState('');
     const [venueName, setVenueName] = useState('');
-    const [rowsNumber, setRowsNumber] = useState('');
-    const [columnsNumber, setColumnsNumber] = useState('');
-    const [date, setDate] = useState('');
+    const [rowsNumber, setRowsNumber] = useState(0);
+    const [columnsNumber, setColumnsNumber] = useState(0);
+    const [date, setDate] = useState(Date);
     const [referee, setReferee] = useState('');
     const [linesman1, setLinesman1] = useState('');
     const [linesman2, setLinesman2] = useState('');
     const [selectedVenues, setSelectedVenues] = useState([]);
 
 
-    const apiURL = 'http://localhost:4000/matches' ;
+    const apiURL = 'http://localhost:3000/match/create' ;
 
 
     useEffect(() => {
-        axios.get('http://localhost:4000/venues')
+        axios.get('http://localhost:3000/stadium/view')
     .then((response) => {
         const data = response.data;
         setSelectedVenues(data);
-
+        console.log(data);
     }).catch(() => {
         alert('Error retrieving data');
     })
@@ -70,7 +70,7 @@ const AddMatch = (props) => {
             {
                 for (let j = 0 ; j < columnsNumber; j++)
                 {
-                    gfg[i][j] = 0;
+                    gfg[i][j] = false;
                 }
             }
             e.preventDefault();
@@ -78,7 +78,7 @@ const AddMatch = (props) => {
                 teamone : team1,
                 teamtwo : team2,
                 stadiumname : venueName,
-                date : date,
+                date : Date.parse(date),
                 referee : referee,
                 linesmen : [
                     linesman1,
@@ -90,12 +90,12 @@ const AddMatch = (props) => {
             axios.post( apiURL , matchInfo ) //json server
             .then(response => {
             console.log(response)
+            alert('Successfully added a new match');
+            refreshPage();
             // alert('Successfully added a new match');
             }).catch((e) => {
                 alert(e);
             })
-            alert('Successfully added a new match');
-            refreshPage();
         }
 
         

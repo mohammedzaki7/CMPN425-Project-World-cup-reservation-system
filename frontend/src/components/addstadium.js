@@ -28,9 +28,9 @@ function Validations(rowsnum, colsnum)
 
 const AddStadium = (props) => {
     const [stadiumName, setStadiumName] = useState('');
-    const [rowsNumber, setRowsNumber] = useState('');
-    const [seatsNumberPerRow, setSeatsNumberPerRow] = useState('');
-    const apiURL = 'http://localhost:4000/venues' ;
+    const [rowsNumber, setRowsNumber] = useState(0);
+    const [seatsNumberPerRow, setSeatsNumberPerRow] = useState(0);
+    const apiURL = 'http://localhost:3000/stadium/create' ;
     
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -38,13 +38,14 @@ const AddStadium = (props) => {
         {
             const stadiumInfo = {
                 name : stadiumName,
-                rowsNumber : rowsNumber,
-                seatsNumberPerRow : seatsNumberPerRow
+                length : parseInt(rowsNumber),
+                width : parseInt(seatsNumberPerRow)
             }
             console.log(stadiumInfo)
             axios.post( apiURL , stadiumInfo ) //json server
             .then(response => {
             console.log(response)
+            refreshPage();
             }).catch((e) => {
                 alert(e);
             })
@@ -72,7 +73,7 @@ const AddStadium = (props) => {
                     <input value = {seatsNumberPerRow} onChange = {
                         (e) => setSeatsNumberPerRow(e.target.value)} type = "text" id = "seatsNumberPerRow" name = "seatsNumberPerRow" required/>   
 
-                    <button className="loginOrRegister" type = "submit" onClick={refreshPage}>Add Match</button>
+                    <button className="loginOrRegister" type = "submit" >Add Match</button>
         
                 </form>
             </div>

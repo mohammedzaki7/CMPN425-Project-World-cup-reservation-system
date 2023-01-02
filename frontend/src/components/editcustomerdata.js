@@ -100,7 +100,7 @@ const EditCustomerData = (props) => {
                     birthdate : birthDate,
                     gender : gender,
                     nationality : nationality,
-                    role : role
+                    // role : role
                 }
                 axios.put( apiURLUpdate+"/"+id, userInfo ) //json server 1 will be changed to id
                 .then(response => {
@@ -343,13 +343,13 @@ const EditCustomerData = (props) => {
                 <option value="zimbabwean">Zimbabwean</option>
             </select>
 
-            <label htmlFor = "role">Role</label>
+            {/* <label htmlFor = "role">Role</label>
             <select value = {role} onChange = {
                 (e) => setRole(e.target.value)} id = "role" name="role">
                 <option value="">{role}</option>
                 <option value="manager">manager</option>
                 <option value="fan">fan</option>
-            </select>
+            </select> */}
 
             <button className="loginOrRegister" type = "submit" onClick={refreshPage}>Update</button>
 
