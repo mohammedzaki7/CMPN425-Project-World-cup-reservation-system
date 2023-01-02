@@ -18,19 +18,20 @@ const UserHome = (props) => {
         window.location.reload();
     }
 
-    const  [userId] = useSearchParams();
-    console.log(userId);
+    // const  [userId] = useSearchParams();
+    // console.log(userId);
     // this.props.location
     
     return (
         <div>
-            {
-                console.log(userId.get('userId'))
-            }
             <h1>FIFA WORLD CUP 2022</h1>
             <AddMatch/>
-            <SelectMatchToEdit onUserIdChange={userId.get('userId')}/>
-            <AddStadium onUserIdChange={userId.get('userId')}/>
+            <SelectMatchToEdit 
+            // onUserIdChange={userId.get('userId')}
+            />
+            <AddStadium 
+            // onUserIdChange={userId.get('userId')}
+            />
             <ViewMatch/>
             <ViewSeats/>
         </div>

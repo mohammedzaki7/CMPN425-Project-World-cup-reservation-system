@@ -88,10 +88,11 @@ const EditMatch = (props) => {
                 }
             }
             
+            console.log(venueName);
             const matchInfo = {
                 teamone : team1,
                 teamtwo : team2,
-                stadiumname : venueName,
+                stadiumname : venueName.split(",")[0],
                 date : date,
                 referee : referee,
                 linesmen : [
@@ -99,7 +100,8 @@ const EditMatch = (props) => {
                     linesman2],
                 seats : gfg
             }
-            axios.patch( apiURLUpdate+"/"+id, matchInfo ) //json server 1 will be changed to id
+            console.log(matchInfo);
+            axios.put( apiURLUpdate+"/"+id, matchInfo ) //json server 1 will be changed to id
             .then(response => {
             console.log(response)
             refreshPage();
@@ -211,7 +213,6 @@ const EditMatch = (props) => {
                         <option value="Whales">Whales</option>
                         </select>  
     
-                        <label htmlFor = "venue">Venue</label>  
                         <label htmlFor = "venue">Stadium</label> 
                         <select value = {venueName} onChange = {
                         (e) => {
@@ -223,11 +224,13 @@ const EditMatch = (props) => {
                             // console.log(e.target.value.slice(-7))
                             console.log(e.target.value.split(","))
                             }} id = "venue" name="venue" required>
-                            <option value="">venueName</option>
+                            <option value="">{venueName}</option>
                             {selectedVenues.map((selectedVenue, index) => 
                             <option key = {index} value={[selectedVenue['name']
-                            , selectedVenue['length'], selectedVenue['width']]
-                            }>{selectedVenue['name']}</option>
+                            , selectedVenue['length'], 
+                            selectedVenue['width']
+                        ]}
+                            >{selectedVenue['name']}</option>
 
                             )}
                         </select>

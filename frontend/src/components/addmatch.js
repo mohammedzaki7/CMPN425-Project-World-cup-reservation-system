@@ -77,7 +77,7 @@ const AddMatch = (props) => {
             const matchInfo = {
                 teamone : team1,
                 teamtwo : team2,
-                stadiumname : venueName,
+                stadiumname : venueName.split(',')[0],
                 date : Date.parse(date),
                 referee : referee,
                 linesmen : [

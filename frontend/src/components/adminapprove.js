@@ -5,7 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 const AdminApprove = (props) => {
     const [users, setUsers] = useState([]);
 
-    const apiURL = 'http://localhost:3000/users' ;
+    const apiURL = 'http://localhost:3000/user/view' ;
+    const apiURLUpdate = 'http://localhost:3000/user/update' ;
+    const apiURLDelete = 'http://localhost:3000/user/delete' ;
 
     useEffect(() => {
         axios.get(apiURL)
@@ -21,8 +23,9 @@ const AdminApprove = (props) => {
 
         const remove = (e, userId) => {
             e.preventDefault();
+            console.log(userId);
 
-            axios.delete( apiURL + '/' + userId) //json server
+            axios.delete( apiURLDelete + '/' + userId) //json server
             .then(response => { }).catch((e) => {
                 alert(e, 'reservation');
             })
@@ -31,11 +34,12 @@ const AdminApprove = (props) => {
         }
         const approve = (e, userId) =>{
             e.preventDefault();
+            console.log(userId);
             
             const userInfo = {
-                approved : "true"
+                approved : true
             }
-            axios.patch( apiURL+"/"+userId, userInfo ) //json server 1 will be changed to id
+            axios.put( apiURLUpdate + '/' +userId, userInfo ) //json server 1 will be changed to id
                 .then(response => {
                 console.log(response)
                 }).catch((e) => {
@@ -65,18 +69,18 @@ const AdminApprove = (props) => {
                 <small>Role : {user['role']}</small>
                 <small>Username : {user['username']}</small><br></br> 
                 {
-                user['approved'] === 'false' ?
+                user['approved'] === false ?
                 <div>
                     <button className="remove" onClick={(e) => {
-                    remove(e, user['id'])
+                    remove(e, user['_id'])
                     }}>Reject</button>
                     <button className="approve" onClick={(e) => {
-                    approve(e, user['id'])
+                    approve(e, user['_id'])
                     }}>Approve</button> 
                 </div>
                 : 
                 <button className="remove" onClick={(e) => {
-                remove(e, user['id'])
+                remove(e, user['_id'])
                 }}>Remove</button>
             }
                  
