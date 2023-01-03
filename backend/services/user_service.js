@@ -70,12 +70,15 @@ exports.loginUser = (req, res) => {
 }
 
 
+//@method: GET
+//@desc: get all users in the system
 exports.getAllCustomers = (req, res) => {
-    User.find({ role: 'fan' }).then((result) => {
+    User.find().then((result) => {
         res.send(result);
     }).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while retrieving fans." });
     });
+    
 }
 
 
