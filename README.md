@@ -16,6 +16,23 @@ npm start
 
 
 # 2- Frontend
+To be able to do the following commands, go to the frontend folder
+
+## Requirements
+
+```bash
+npm install
+```
+
+## Run server
+
+```bash
+npm start
+```
+
+
+
+# Additional info
 
 ## Getting Started with Create React App
 
